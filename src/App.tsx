@@ -26,6 +26,7 @@ import {
 export default function App() {
   // Theme state choice: 'dark' | 'light'
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof localStorage === 'undefined') return 'dark';
     return (localStorage.getItem('prova-x-theme') as 'dark' | 'light') || 'dark';
   });
 
@@ -164,6 +165,7 @@ export default function App() {
 
   // Syllabus (Edital Verticalizado) state
   const [editalTopics, setEditalTopics] = useState<EditalTopic[]>(() => {
+    if (typeof localStorage === 'undefined') return INITIAL_EDITAL_TOPICS;
     const saved = localStorage.getItem('athena-edital-v1');
     if (saved) {
       try {
