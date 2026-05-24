@@ -140,6 +140,7 @@ export default function App() {
     syllabusCoverage: 18.4,
     currentApprovalProbability: 41.2,
     daysConsecutive: 3,
+    studyStreakHistory: [new Date().toISOString().split('T')[0]],
     disciplinePerformance: {
       'Língua Portuguesa': { total: 5, correct: 4, efficiency: 80, status: 'safe' },
       'Raciocínio Lógico-Matemático': { total: 4, correct: 3, efficiency: 75, status: 'safe' },
@@ -534,11 +535,11 @@ export default function App() {
       const corrects = isCorrect ? prev.totalCorrect + 1 : prev.totalCorrect;
       
       // Fine-grained discipline update
-      const currentPerformance = prev.disciplinePerformance[discipline] || { total: 0, correct: 0, efficiency: 15, status: 'critical' };
+      const currentPerformance = prev.disciplinePerformance[discipline] || { total: 0, correct: 0, efficiency: 15, status: 'critical' as const };
       const subTotal = currentPerformance.total + 1;
       const subCorrect = isCorrect ? currentPerformance.correct + 1 : currentPerformance.correct;
       const efficiency = Math.round((subCorrect / subTotal) * 100);
-      const status = efficiency >= 70 ? 'safe' : efficiency >= 50 ? 'warning' : 'critical';
+      const status: 'safe' | 'warning' | 'critical' = efficiency >= 70 ? 'safe' : efficiency >= 50 ? 'warning' : 'critical';
 
       const updatedPerformance = {
         ...prev.disciplinePerformance,
@@ -694,7 +695,7 @@ export default function App() {
             schedule={schedule}
             completedTasks={completedTasks}
             onToggleTask={handleToggleTask}
-            onNavigate={(tab) => { setCurrentTab(tab); setMobileMenuOpen(false); }}
+            onNavigate={(tab: string) => { setCurrentTab(tab); setMobileMenuOpen(false); }}
             onSelectTaskToTrain={setSelectedTaskToTrain}
             theme={theme}
           />
@@ -721,7 +722,7 @@ export default function App() {
       case 'simulados':
         return (
           <Simulados 
-            onSimuladoFinished={(points, count) => {
+            onSimuladoFinished={(points: number, count: number) => {
               // Increase overall metrics based on simulated trial completed
               setProgress(prev => {
                 const totalScore = Math.max(12, prev.totalQuestionsAnswered + count);
@@ -744,8 +745,8 @@ export default function App() {
           <Cronograma 
             schedule={schedule}
             onboardingData={onboarding}
-            onUpdateSchedule={(newSch) => setSchedule(newSch)}
-            onUpdateOnboardingData={(newData) => setOnboarding(newData)}
+            onUpdateSchedule={(newSch: StudySchedule) => setSchedule(newSch)}
+            onUpdateOnboardingData={(newData: UserOnboarding) => setOnboarding(newData)}
             theme={theme}
           />
         );
@@ -773,7 +774,7 @@ export default function App() {
         return (
           <Planos 
             currentPlanId={subscriptionPlan}
-            onPlanUpgraded={(newPlan) => setSubscriptionPlan(newPlan)}
+            onPlanUpgraded={(newPlan: 'free' | 'essencial' | 'premium') => setSubscriptionPlan(newPlan)}
           />
         );
       case 'contran':
