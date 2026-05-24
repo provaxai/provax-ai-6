@@ -10,33 +10,76 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiGenerateScheduleRouteImport } from './routes/api/generate-schedule'
+import { Route as ApiGenerateQuestionRouteImport } from './routes/api/generate-question'
+import { Route as ApiChatAthenaRouteImport } from './routes/api/chat-athena'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGenerateScheduleRoute = ApiGenerateScheduleRouteImport.update({
+  id: '/api/generate-schedule',
+  path: '/api/generate-schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiGenerateQuestionRoute = ApiGenerateQuestionRouteImport.update({
+  id: '/api/generate-question',
+  path: '/api/generate-question',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiChatAthenaRoute = ApiChatAthenaRouteImport.update({
+  id: '/api/chat-athena',
+  path: '/api/chat-athena',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/chat-athena': typeof ApiChatAthenaRoute
+  '/api/generate-question': typeof ApiGenerateQuestionRoute
+  '/api/generate-schedule': typeof ApiGenerateScheduleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/chat-athena': typeof ApiChatAthenaRoute
+  '/api/generate-question': typeof ApiGenerateQuestionRoute
+  '/api/generate-schedule': typeof ApiGenerateScheduleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/chat-athena': typeof ApiChatAthenaRoute
+  '/api/generate-question': typeof ApiGenerateQuestionRoute
+  '/api/generate-schedule': typeof ApiGenerateScheduleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/chat-athena'
+    | '/api/generate-question'
+    | '/api/generate-schedule'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/chat-athena'
+    | '/api/generate-question'
+    | '/api/generate-schedule'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/chat-athena'
+    | '/api/generate-question'
+    | '/api/generate-schedule'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiChatAthenaRoute: typeof ApiChatAthenaRoute
+  ApiGenerateQuestionRoute: typeof ApiGenerateQuestionRoute
+  ApiGenerateScheduleRoute: typeof ApiGenerateScheduleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,12 +91,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/generate-schedule': {
+      id: '/api/generate-schedule'
+      path: '/api/generate-schedule'
+      fullPath: '/api/generate-schedule'
+      preLoaderRoute: typeof ApiGenerateScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/generate-question': {
+      id: '/api/generate-question'
+      path: '/api/generate-question'
+      fullPath: '/api/generate-question'
+      preLoaderRoute: typeof ApiGenerateQuestionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/chat-athena': {
+      id: '/api/chat-athena'
+      path: '/api/chat-athena'
+      fullPath: '/api/chat-athena'
+      preLoaderRoute: typeof ApiChatAthenaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiChatAthenaRoute: ApiChatAthenaRoute,
+  ApiGenerateQuestionRoute: ApiGenerateQuestionRoute,
+  ApiGenerateScheduleRoute: ApiGenerateScheduleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
