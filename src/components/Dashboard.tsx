@@ -14,8 +14,14 @@ interface DashboardProps {
   theme?: 'light' | 'dark';
 }
 
-// Palette
-const ORANGE = '#E8A020';
+// Palette — PRF Blue
+const BLUE = '#1B4FD8';
+const BLUE_DARK = '#1339A8';
+const BLUE_SOFT = '#EEF3FF';
+const BLUE_BORDER = '#BFDBFE';
+const BLUE_ICON_BG = '#DBEAFE';
+const BLUE_ICON_BORDER = '#93C5FD';
+const ORANGE = '#E8A020'; // kept for streak + critical badge + mid diagnostics
 const GREEN = '#2D9E6B';
 const RED = '#C0392B';
 const RED_SOFT = '#E74C3C';
@@ -145,7 +151,7 @@ export default function Dashboard({
               Suíte de Planejamento Estratégico
             </div>
             <h1 style={{ fontSize: 24, fontWeight: 800, margin: '6px 0 4px', color: TEXT, letterSpacing: '-0.01em' }}>
-              Foco na Meta, <span style={{ color: ORANGE }}>{onboardingName || 'Recruta'}</span>
+              Foco na Meta, <span style={{ color: BLUE }}>{onboardingName || 'Recruta'}</span>
             </h1>
             <p style={{ fontSize: 13, color: MUTED, margin: 0 }}>
               Athena compilou sua agenda de alto impacto para hoje.
@@ -167,8 +173,8 @@ export default function Dashboard({
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
             <span
               style={{
-                background: '#FFF1D6',
-                color: ORANGE,
+                background: BLUE_SOFT,
+                color: BLUE,
                 fontSize: 10,
                 fontWeight: 700,
                 textTransform: 'uppercase',
@@ -186,8 +192,8 @@ export default function Dashboard({
           <p style={{ textAlign: 'center', color: MUTED, fontSize: 12, margin: '4px 0 12px' }}>
             Legislação de Trânsito · 60 min · +50 XP
           </p>
-          <div style={{ height: 4, background: '#F1ECE1', borderRadius: 999, overflow: 'hidden', margin: '0 auto 14px' }}>
-            <div style={{ height: '100%', width: `${goalPercent}%`, background: ORANGE, transition: 'width 0.3s' }} />
+          <div style={{ height: 4, background: '#E5EAF2', borderRadius: 999, overflow: 'hidden', margin: '0 auto 14px' }}>
+            <div style={{ height: '100%', width: `${goalPercent}%`, background: BLUE, transition: 'width 0.3s' }} />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -251,7 +257,7 @@ export default function Dashboard({
               width: '100%',
               marginTop: 14,
               padding: '12px 16px',
-              background: ORANGE,
+              background: BLUE,
               color: '#fff',
               fontWeight: 700,
               fontSize: 14,
@@ -263,7 +269,7 @@ export default function Dashboard({
               justifyContent: 'center',
               gap: 8,
               fontFamily: 'inherit',
-              boxShadow: '0 2px 10px rgba(232,160,32,0.25)',
+              boxShadow: '0 2px 10px rgba(27,79,216,0.25)',
             }}
           >
             <Play size={14} fill="#fff" /> Iniciar sessão de hoje <ArrowRight size={14} />
@@ -298,7 +304,7 @@ export default function Dashboard({
                 width: 8,
                 height: 8,
                 borderRadius: '50%',
-                background: ORANGE,
+                background: BLUE,
                 display: 'inline-block',
                 animation: 'pulse 1.5s infinite',
               }}
@@ -329,8 +335,8 @@ export default function Dashboard({
         {/* ATHENA */}
         <div
           style={{
-            background: '#FFF8EC',
-            border: '1px solid #FFE4A0',
+            background: BLUE_SOFT,
+            border: `1px solid ${BLUE_BORDER}`,
             borderRadius: 14,
             padding: 16,
             display: 'flex',
@@ -343,17 +349,18 @@ export default function Dashboard({
               width: 36,
               height: 36,
               borderRadius: '50%',
-              background: '#FFE4A0',
+              background: BLUE_ICON_BG,
+              border: `1px solid ${BLUE_ICON_BORDER}`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
             }}
           >
-            <Shield size={18} color={ORANGE} />
+            <Shield size={18} color={BLUE} />
           </div>
           <div>
-            <div style={{ fontSize: 10, color: ORANGE, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+            <div style={{ fontSize: 10, color: BLUE, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
               Recomendação Athena IA
             </div>
             <p style={{ fontSize: 13, color: TEXT, margin: '4px 0 0', lineHeight: 1.5 }}>{athenaText}</p>
@@ -398,7 +405,7 @@ export default function Dashboard({
             type="button"
             onClick={() => onNavigate('treinar')}
             style={{
-              background: ORANGE,
+              background: BLUE,
               color: '#fff',
               border: 'none',
               padding: '10px 18px',
