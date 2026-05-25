@@ -257,7 +257,7 @@ export default function Dashboard({
               width: '100%',
               marginTop: 14,
               padding: '12px 16px',
-              background: ORANGE,
+              background: BLUE,
               color: '#fff',
               fontWeight: 700,
               fontSize: 14,
@@ -269,7 +269,7 @@ export default function Dashboard({
               justifyContent: 'center',
               gap: 8,
               fontFamily: 'inherit',
-              boxShadow: '0 2px 10px rgba(232,160,32,0.25)',
+              boxShadow: '0 2px 10px rgba(27,79,216,0.25)',
             }}
           >
             <Play size={14} fill="#fff" /> Iniciar sessão de hoje <ArrowRight size={14} />
