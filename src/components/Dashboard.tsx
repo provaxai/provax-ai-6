@@ -151,7 +151,7 @@ export default function Dashboard({
               Suíte de Planejamento Estratégico
             </div>
             <h1 style={{ fontSize: 24, fontWeight: 800, margin: '6px 0 4px', color: TEXT, letterSpacing: '-0.01em' }}>
-              Foco na Meta, <span style={{ color: ORANGE }}>{onboardingName || 'Recruta'}</span>
+              Foco na Meta, <span style={{ color: BLUE }}>{onboardingName || 'Recruta'}</span>
             </h1>
             <p style={{ fontSize: 13, color: MUTED, margin: 0 }}>
               Athena compilou sua agenda de alto impacto para hoje.
