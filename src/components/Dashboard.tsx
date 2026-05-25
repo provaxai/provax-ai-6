@@ -335,8 +335,8 @@ export default function Dashboard({
         {/* ATHENA */}
         <div
           style={{
-            background: '#FFF8EC',
-            border: '1px solid #FFE4A0',
+            background: BLUE_SOFT,
+            border: `1px solid ${BLUE_BORDER}`,
             borderRadius: 14,
             padding: 16,
             display: 'flex',
@@ -349,17 +349,18 @@ export default function Dashboard({
               width: 36,
               height: 36,
               borderRadius: '50%',
-              background: '#FFE4A0',
+              background: BLUE_ICON_BG,
+              border: `1px solid ${BLUE_ICON_BORDER}`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
             }}
           >
-            <Shield size={18} color={ORANGE} />
+            <Shield size={18} color={BLUE} />
           </div>
           <div>
-            <div style={{ fontSize: 10, color: ORANGE, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+            <div style={{ fontSize: 10, color: BLUE, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
               Recomendação Athena IA
             </div>
             <p style={{ fontSize: 13, color: TEXT, margin: '4px 0 0', lineHeight: 1.5 }}>{athenaText}</p>
