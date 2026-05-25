@@ -221,9 +221,10 @@ export default function EditalVerticalizado({
             onClick={() => { setSelectedBloco('all'); setSelectedSubject('all'); }}
             className={`py-1.5 px-3 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
               selectedBloco === 'all' 
-                ? 'bg-amber-500 text-slate-950 font-black' 
+                ? 'text-white font-black' 
                 : 'text-slate-400 hover:text-white bg-slate-800/40 hover:bg-slate-800'
             }`}
+            style={selectedBloco === 'all' ? { background: '#003DA5' } : undefined}
           >
             Ver todos blocos
           </button>
@@ -233,9 +234,10 @@ export default function EditalVerticalizado({
               onClick={() => { setSelectedBloco(bn as 1|2|3); setSelectedSubject('all'); }}
               className={`py-1.5 px-3 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 selectedBloco === bn 
-                  ? 'bg-amber-500 text-slate-950 font-black' 
+                  ? 'text-white font-black' 
                   : 'text-slate-400 hover:text-white bg-slate-800/40 hover:bg-slate-800'
               }`}
+              style={selectedBloco === bn ? { background: '#003DA5' } : undefined}
             >
               Bloco {bn}
             </button>
