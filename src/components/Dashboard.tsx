@@ -173,8 +173,8 @@ export default function Dashboard({
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
             <span
               style={{
-                background: '#FFF1D6',
-                color: ORANGE,
+                background: BLUE_SOFT,
+                color: BLUE,
                 fontSize: 10,
                 fontWeight: 700,
                 textTransform: 'uppercase',
@@ -192,8 +192,8 @@ export default function Dashboard({
           <p style={{ textAlign: 'center', color: MUTED, fontSize: 12, margin: '4px 0 12px' }}>
             Legislação de Trânsito · 60 min · +50 XP
           </p>
-          <div style={{ height: 4, background: '#F1ECE1', borderRadius: 999, overflow: 'hidden', margin: '0 auto 14px' }}>
-            <div style={{ height: '100%', width: `${goalPercent}%`, background: ORANGE, transition: 'width 0.3s' }} />
+          <div style={{ height: 4, background: '#E5EAF2', borderRadius: 999, overflow: 'hidden', margin: '0 auto 14px' }}>
+            <div style={{ height: '100%', width: `${goalPercent}%`, background: BLUE, transition: 'width 0.3s' }} />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
