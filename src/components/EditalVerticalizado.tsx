@@ -193,77 +193,23 @@ export default function EditalVerticalizado({
 
       </div>
 
-      {/* COMPACT PROGRESS BARS GRID (THE 4 STUDY DIMENSIONS) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="indicators-four-columns-grid">
-        
-        {/* 1. Estudo */}
-        <div className={`${theme === 'light' ? 'bg-white border-slate-200' : 'bg-slate-900/40 border-slate-900'} border p-3.5 rounded-xl space-y-2`}>
-          <div className="flex justify-between items-center text-xs">
-            <span className="font-bold text-white flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5 text-blue-500" /> Estudo (Teoria)
-            </span>
-            <span className="font-mono font-bold text-blue-400">{stats.estudioPercent}%</span>
+      {/* INLINE COMPACT METRICS ROW (no individual cards) */}
+      <div className="flex flex-wrap items-center gap-x-8 gap-y-3 px-1" id="indicators-inline-row">
+        {[
+          { label: 'Estudo', pct: stats.estudioPercent, color: '#2563eb' },
+          { label: 'Resumo', pct: stats.resumoPercent, color: '#f59e0b' },
+          { label: 'Revisão', pct: stats.revisaoPercent, color: '#a855f7' },
+          { label: 'Simulado', pct: stats.simuladoPercent, color: '#64748b' },
+        ].map((m) => (
+          <div key={m.label} className="flex items-center gap-2 min-w-[150px] flex-1">
+            <span className="w-2 h-2 rounded-full shrink-0" style={{ background: m.color }} />
+            <span className="text-xs font-medium text-slate-300 w-16 shrink-0">{m.label}</span>
+            <div className="h-1 flex-1 bg-slate-800 rounded-full overflow-hidden min-w-[40px]">
+              <div className="h-full rounded-full transition-all duration-500" style={{ width: `${m.pct}%`, background: m.color }} />
+            </div>
+            <span className="text-xs font-semibold tabular-nums w-10 text-right" style={{ color: m.color }}>{m.pct}%</span>
           </div>
-          <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-500 rounded-full transition-all duration-500" style={{ width: `${stats.estudioPercent}%` }} />
-          </div>
-          <div className="flex justify-between items-center text-[10px] font-mono text-slate-500">
-            <span>Metas Concluídas</span>
-            <span className="text-slate-300 font-bold">{stats.countEstudio} / {stats.total}</span>
-          </div>
-        </div>
-
-        {/* 2. Resumo */}
-        <div className={`${theme === 'light' ? 'bg-white border-slate-200' : 'bg-slate-900/40 border-slate-900'} border p-3.5 rounded-xl space-y-2`}>
-          <div className="flex justify-between items-center text-xs">
-            <span className="font-bold text-white flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5 text-amber-500" /> Resumos Criados
-            </span>
-            <span className="font-mono font-bold text-amber-400">{stats.resumoPercent}%</span>
-          </div>
-          <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-amber-500 rounded-full transition-all duration-500" style={{ width: `${stats.resumoPercent}%` }} />
-          </div>
-          <div className="flex justify-between items-center text-[10px] font-mono text-slate-500">
-            <span>Metas Concluídas</span>
-            <span className="text-slate-300 font-bold">{stats.countResumos} / {stats.total}</span>
-          </div>
-        </div>
-
-        {/* 3. Revisão */}
-        <div className={`${theme === 'light' ? 'bg-white border-slate-200' : 'bg-slate-900/40 border-slate-900'} border p-3.5 rounded-xl space-y-2`}>
-          <div className="flex justify-between items-center text-xs">
-            <span className="font-bold text-white flex items-center gap-1.5">
-              <RefreshCw className="w-3.5 h-3.5 text-purple-500" /> Revisões Feitas
-            </span>
-            <span className="font-mono font-bold text-purple-400">{stats.revisaoPercent}%</span>
-          </div>
-          <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-purple-500 rounded-full transition-all duration-500" style={{ width: `${stats.revisaoPercent}%` }} />
-          </div>
-          <div className="flex justify-between items-center text-[10px] font-mono text-slate-500">
-            <span>Metas Concluídas</span>
-            <span className="text-slate-300 font-bold">{stats.countRevisoes} / {stats.total}</span>
-          </div>
-        </div>
-
-        {/* 4. Questões / Simulado */}
-        <div className={`${theme === 'light' ? 'bg-white border-slate-200' : 'bg-slate-900/40 border-slate-900'} border p-3.5 rounded-xl space-y-2`}>
-          <div className="flex justify-between items-center text-xs">
-            <span className="font-bold text-white flex items-center gap-1.5">
-              <HelpCircle className="w-3.5 h-3.5 text-emerald-500" /> Simulados Ocorrido
-            </span>
-            <span className="font-mono font-bold text-emerald-400">{stats.simuladoPercent}%</span>
-          </div>
-          <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-emerald-500 rounded-full transition-all duration-500" style={{ width: `${stats.simuladoPercent}%` }} />
-          </div>
-          <div className="flex justify-between items-center text-[10px] font-mono text-slate-500">
-            <span>Metas Concluídas</span>
-            <span className="text-slate-300 font-bold">{stats.countSimulados} / {stats.total}</span>
-          </div>
-        </div>
-
+        ))}
       </div>
 
       {/* FILTER CONTROLS & COMPACT SEARCH BAR */}
