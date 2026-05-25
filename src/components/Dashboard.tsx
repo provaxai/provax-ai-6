@@ -405,7 +405,7 @@ export default function Dashboard({
             type="button"
             onClick={() => onNavigate('treinar')}
             style={{
-              background: ORANGE,
+              background: BLUE,
               color: '#fff',
               border: 'none',
               padding: '10px 18px',
