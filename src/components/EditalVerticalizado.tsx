@@ -306,109 +306,105 @@ export default function EditalVerticalizado({
             return (
               <div 
                 key={subjectName} 
-                className={`${theme === 'light' ? 'bg-white border-slate-200' : 'bg-[#111a2e] border-slate-850/60'} rounded-xl border overflow-hidden shadow-sm`}
+                className="overflow-hidden"
                 id={`accordion-group-${subjectName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
               >
                 
-                {/* ACCORDION BAR HEADER BUTTON (Exactly matching mockup bar style) */}
+                {/* LIGHT BLOCK HEADER BAR */}
                 <div 
                   onClick={() => toggleCollapseSubject(subjectName)}
-                  className="p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 cursor-pointer hover:bg-slate-900/10 transition-colors select-none"
+                  className="px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 cursor-pointer select-none bg-slate-50 hover:bg-slate-100/80 rounded-lg transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <button className={`${theme === 'light' ? 'text-slate-500 hover:text-slate-950 hover:bg-slate-100' : 'text-slate-400 hover:text-white hover:bg-slate-800'} p-1 rounded transition-colors`}>
+                    <button className="text-slate-500 hover:text-slate-700 p-1 rounded transition-colors">
                       {isCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
                     </button>
                     <div>
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-[9px] uppercase font-mono font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20 px-1.5 py-0.5 rounded">
-                          BLOCO {blockNumber}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wide">
+                          Bloco {blockNumber}
                         </span>
-                        <h3 className={`text-sm font-black ${theme === 'light' ? 'text-slate-900' : 'text-white'} hover:text-amber-500 transition-colors`}>
+                        <h3 className="text-sm font-bold text-slate-800">
                           {subjectName}
                         </h3>
                       </div>
-                      <span className={`text-[10px] font-mono ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
-                        {totalOnSubject} TÓPICOS CADASTRADOS
+                      <span className="text-[11px] text-slate-500">
+                        {totalOnSubject} tópicos
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
+                  <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-start">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono font-bold text-amber-500">
-                        {subjectPercent}% Coberto
+                      <span className="text-xs font-semibold" style={{ color: '#003DA5' }}>
+                        {subjectPercent}% coberto
                       </span>
-                      {/* Miniature horizontal bar progress */}
-                      <div className="w-16 h-1 w-full bg-slate-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-amber-400 rounded-full" style={{ width: `${subjectPercent}%` }} />
+                      <div className="w-16 h-1 bg-slate-200 rounded-full overflow-hidden">
+                        <div className="h-full rounded-full" style={{ width: `${subjectPercent}%`, background: '#003DA5' }} />
                       </div>
                     </div>
 
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        // Bulk toggle: either set all to checked or all to unchecked
                         const someUnchecked = subjTopics.some(t => !t.studied || !t.summary || !t.reviewed || !t.simulated);
                         onSetAllTopicsOfSubject(subjectName, someUnchecked);
                       }}
-                      className="px-2.5 py-1 text-[10px] font-mono font-bold bg-[#1b263e]/60 hover:bg-amber-500 hover:text-slate-950 text-slate-305 border border-slate-700 rounded uppercase transition-all"
+                      className="text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors"
                     >
-                      Concluir
+                      Marcar concluído →
                     </button>
                   </div>
                 </div>
 
                 {/* EXPANDABLE TABLE */}
                 {!isCollapsed && (
-                  <div className={`border-t ${theme === 'light' ? 'border-slate-200' : 'border-[#182030]'} overflow-x-auto`}>
+                  <div className="overflow-x-auto mt-1">
                     <table className="w-full text-left min-w-[700px]">
                       <thead>
-                        <tr className={`border-b ${theme === 'light' ? 'border-slate-200 bg-slate-100/60' : 'border-[#182030] bg-slate-950/20'} text-[10px] font-mono font-bold uppercase ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'} tracking-wider`}>
-                          <th className="py-2.5 px-4 w-16 text-center">CÓDIGO</th>
-                          <th className="py-2.5 px-4">SUBTÓPICO DO EDITAL OFICIAL</th>
-                          <th className="py-2.5 px-4 text-center w-20 text-blue-500 font-bold">ESTUDO</th>
-                          <th className="py-2.5 px-4 text-center w-20 text-amber-500 font-bold">RESUMO</th>
-                          <th className="py-2.5 px-4 text-center w-20 text-purple-500 font-bold">REVISÃO</th>
-                          <th className="py-2.5 px-4 text-center w-20 text-emerald-500 font-bold">SIMULADO</th>
-                          <th className="py-2.5 px-4 text-center w-28">OPÇÕES</th>
+                        <tr className="border-b border-slate-200 text-[11px] font-normal" style={{ color: '#94A3B8' }}>
+                          <th className="py-2 px-4 w-16 text-center font-normal">Código</th>
+                          <th className="py-2 px-4 font-normal">Subtópico do edital oficial</th>
+                          <th className="py-2 px-4 text-center w-20 font-normal" style={{ color: '#60a5fa' }}>Estudo</th>
+                          <th className="py-2 px-4 text-center w-20 font-normal" style={{ color: '#fbbf24' }}>Resumo</th>
+                          <th className="py-2 px-4 text-center w-20 font-normal" style={{ color: '#c084fc' }}>Revisão</th>
+                          <th className="py-2 px-4 text-center w-20 font-normal">Simulado</th>
+                          <th className="py-2 px-4 text-center w-28 font-normal">Ação</th>
                         </tr>
                       </thead>
-                      <tbody className={`divide-y ${theme === 'light' ? 'divide-slate-200' : 'divide-[#182030]/60'}`}>
-                        {subjTopics.map((topic) => (
+                      <tbody>
+                        {subjTopics.map((topic) => {
+                          const isComplete = topic.studied && topic.summary && topic.reviewed && topic.simulated;
+                          return (
                           <tr 
                             key={topic.id} 
-                            className={`hover:bg-slate-900/10 transition-colors text-xs ${
-                              (topic.studied && topic.summary && topic.reviewed && topic.simulated) 
-                                ? (theme === 'light' ? 'opacity-70 bg-emerald-500/5 text-slate-800' : 'opacity-60 bg-emerald-950/5 text-slate-200')
-                                : (theme === 'light' ? 'text-slate-800' : 'text-slate-200')
-                            }`}
+                            className="text-xs border-b border-slate-200/70 transition-colors hover:bg-blue-50/30"
+                            style={isComplete ? { opacity: 0.65 } : undefined}
                           >
                             
                             {/* CODE */}
-                            <td className={`py-3 px-4 text-center font-mono font-medium ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+                            <td className="py-3 px-4 text-center font-mono font-medium text-slate-500" style={{ paddingTop: 12, paddingBottom: 12 }}>
                               {topic.code}
                             </td>
 
                             {/* SUBTOPIC DETAIL */}
-                            <td className={`py-3 px-4 font-semibold ${theme === 'light' ? 'text-slate-800' : 'text-slate-200'}`}>
+                            <td className="px-4 font-medium text-slate-800" style={{ paddingTop: 12, paddingBottom: 12 }}>
                               <div>{topic.description}</div>
-                              {/* Small auto tag if all elements are complete */}
-                              {(topic.studied && topic.summary && topic.reviewed && topic.simulated) && (
-                                <span className="inline-flex items-center gap-1 text-[8px] font-mono text-emerald-400 bg-emerald-500/10 px-1 py-0.5 rounded mt-1 font-bold">
-                                  <Check className="w-2.5 h-2.5" /> 100% CONCLUÍDO
+                              {isComplete && (
+                                <span className="inline-flex items-center gap-1 text-[10px] text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full mt-1.5 font-semibold">
+                                  <Check className="w-2.5 h-2.5" /> Concluído
                                 </span>
                               )}
                             </td>
 
                             {/* ESTUDO CHECKBOX */}
-                            <td className="py-3 px-4 text-center">
+                            <td className="px-4 text-center" style={{ paddingTop: 12, paddingBottom: 12 }}>
                               <button
                                 onClick={() => onToggleTopic(topic.id, 'studied')}
                                 className={`w-5 h-5 mx-auto rounded border flex items-center justify-center transition-all cursor-pointer ${
                                   topic.studied 
                                     ? 'bg-blue-600 border-blue-500 text-white shadow-inner' 
-                                    : (theme === 'light' ? 'border-slate-300 hover:border-slate-400 bg-slate-100/90 shadow-sm' : 'border-slate-800 hover:border-slate-600 bg-slate-950')
+                                    : (theme === 'light' ? 'border-slate-300 hover:border-slate-400 bg-white shadow-sm' : 'border-slate-800 hover:border-slate-600 bg-slate-950')
                                 }`}
                               >
                                 {topic.studied && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -416,13 +412,13 @@ export default function EditalVerticalizado({
                             </td>
 
                             {/* RESUMO CHECKBOX */}
-                            <td className="py-3 px-4 text-center">
+                            <td className="px-4 text-center" style={{ paddingTop: 12, paddingBottom: 12 }}>
                               <button
                                 onClick={() => onToggleTopic(topic.id, 'summary')}
                                 className={`w-5 h-5 mx-auto rounded border flex items-center justify-center transition-all cursor-pointer ${
                                   topic.summary 
                                     ? 'bg-amber-500 border-amber-400 text-slate-950 shadow-inner' 
-                                    : (theme === 'light' ? 'border-slate-300 hover:border-slate-400 bg-slate-100/90 shadow-sm' : 'border-slate-800 hover:border-slate-600 bg-slate-950')
+                                    : (theme === 'light' ? 'border-slate-300 hover:border-slate-400 bg-white shadow-sm' : 'border-slate-800 hover:border-slate-600 bg-slate-950')
                                 }`}
                               >
                                 {topic.summary && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -430,13 +426,13 @@ export default function EditalVerticalizado({
                             </td>
 
                             {/* REVISÃO CHECKBOX */}
-                            <td className="py-3 px-4 text-center">
+                            <td className="px-4 text-center" style={{ paddingTop: 12, paddingBottom: 12 }}>
                               <button
                                 onClick={() => onToggleTopic(topic.id, 'reviewed')}
                                 className={`w-5 h-5 mx-auto rounded border flex items-center justify-center transition-all cursor-pointer ${
                                   topic.reviewed 
                                     ? 'bg-purple-600 border-purple-500 text-white shadow-inner' 
-                                    : (theme === 'light' ? 'border-slate-300 hover:border-slate-400 bg-slate-100/90 shadow-sm' : 'border-slate-800 hover:border-slate-600 bg-slate-950')
+                                    : (theme === 'light' ? 'border-slate-300 hover:border-slate-400 bg-white shadow-sm' : 'border-slate-800 hover:border-slate-600 bg-slate-950')
                                 }`}
                               >
                                 {topic.reviewed && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -444,13 +440,13 @@ export default function EditalVerticalizado({
                             </td>
 
                             {/* SIMULADO CHECKBOX */}
-                            <td className="py-3 px-4 text-center">
+                            <td className="px-4 text-center" style={{ paddingTop: 12, paddingBottom: 12 }}>
                               <button
                                 onClick={() => onToggleTopic(topic.id, 'simulated')}
                                 className={`w-5 h-5 mx-auto rounded border flex items-center justify-center transition-all cursor-pointer ${
                                   topic.simulated 
-                                    ? 'bg-emerald-600 border-emerald-500 text-white shadow-inner' 
-                                    : (theme === 'light' ? 'border-slate-300 hover:border-slate-400 bg-slate-100/90 shadow-sm' : 'border-slate-800 hover:border-slate-600 bg-slate-950')
+                                    ? 'bg-slate-600 border-slate-500 text-white shadow-inner' 
+                                    : (theme === 'light' ? 'border-slate-300 hover:border-slate-400 bg-white shadow-sm' : 'border-slate-800 hover:border-slate-600 bg-slate-950')
                                 }`}
                               >
                                 {topic.simulated && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -458,25 +454,26 @@ export default function EditalVerticalizado({
                             </td>
 
                             {/* PRACTICE ACTION BUTTON */}
-                            <td className="py-3 px-4 text-center">
-                              <div className="flex items-center justify-center gap-1.5">
-                                <button
-                                  onClick={() => handlePracticeTopic(topic)}
-                                  className="px-2.5 py-1 bg-slate-900 border border-slate-800 rounded text-[10px] text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 hover:border-transparent transition-all flex items-center gap-1 font-bold cursor-pointer"
-                                  title="Praticar questões agora"
-                                >
-                                  <Play className="w-2.5 h-2.5 fill-current" />
-                                  <span>Praticar</span>
-                                </button>
-                              </div>
+                            <td className="px-4 text-center" style={{ paddingTop: 12, paddingBottom: 12 }}>
+                              <button
+                                onClick={() => handlePracticeTopic(topic)}
+                                className="px-3 py-1 rounded text-[11px] font-medium transition-all inline-flex items-center gap-1 cursor-pointer"
+                                style={{ color: '#003DA5', background: 'rgba(0,61,165,0.08)' }}
+                                title="Praticar questões agora"
+                              >
+                                <Play className="w-2.5 h-2.5 fill-current" />
+                                <span>Praticar</span>
+                              </button>
                             </td>
 
                           </tr>
-                        ))}
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
                 )}
+
 
               </div>
             );
