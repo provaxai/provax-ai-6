@@ -367,8 +367,9 @@ export default function Treinar({ selectedTaskToTrain, onQuestionAnswered, onFoc
             { id: 'questoes', label: 'Questões CEBRASPE', icon: <BookOpen className="w-4 h-4" /> },
             { id: 'revisao', label: 'Revisão Espaçada', icon: <Layers className="w-4 h-4" /> },
             { id: 'flashcards', label: 'Flashcards', icon: <RefreshCw className="w-4 h-4" /> },
-            { id: 'foco', label: 'Modo Foco Pomodoro', icon: <Clock className="w-4 h-4" /> },
-            { id: 'contran', label: 'Radar CONTRAN', icon: <Shield className="w-4 h-4 text-amber-500 animate-pulse" /> }
+            { id: 'contran', label: 'Radar CONTRAN', icon: <Shield className="w-4 h-4 text-amber-500 animate-pulse" /> },
+            { id: 'foco', label: 'Modo Foco Pomodoro', icon: <Clock className="w-4 h-4" /> }
+
           ].map(tab => (
             <button
               key={tab.id}
