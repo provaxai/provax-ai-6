@@ -313,7 +313,13 @@ export default function EditalVerticalizado({
                 {/* LIGHT BLOCK HEADER BAR */}
                 <div 
                   onClick={() => toggleCollapseSubject(subjectName)}
-                  className="px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 cursor-pointer select-none bg-slate-50 hover:bg-slate-100/80 rounded-lg transition-colors"
+                  className="px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 cursor-pointer select-none rounded-lg transition-colors border"
+                  style={{
+                    background: 'linear-gradient(180deg, #E6EEF9 0%, #D8E4F5 100%)',
+                    borderColor: '#C7D5EA',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(180deg, #DCE6F4 0%, #CBDAEF 100%)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = 'linear-gradient(180deg, #E6EEF9 0%, #D8E4F5 100%)'; }}
                 >
                   <div className="flex items-center gap-3">
                     <button className="text-slate-500 hover:text-slate-700 p-1 rounded transition-colors">
@@ -321,9 +327,10 @@ export default function EditalVerticalizado({
                     </button>
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wide">
+                        <span className="text-[10px] uppercase font-semibold tracking-wide" style={{ color: '#1B4FD8' }}>
                           Bloco {blockNumber}
                         </span>
+
                         <h3 className="text-sm font-bold text-slate-800">
                           {subjectName}
                         </h3>
