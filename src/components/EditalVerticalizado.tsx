@@ -362,14 +362,21 @@ export default function EditalVerticalizado({
                   <div className="overflow-x-auto mt-1">
                     <table className="w-full text-left min-w-[700px]">
                       <thead>
-                        <tr className="border-b border-slate-200 text-[11px] font-normal" style={{ color: '#94A3B8' }}>
-                          <th className="py-2 px-4 w-16 text-center font-normal">Código</th>
-                          <th className="py-2 px-4 font-normal">Subtópico do edital oficial</th>
-                          <th className="py-2 px-4 text-center w-20 font-normal" style={{ color: '#60a5fa' }}>Estudo</th>
-                          <th className="py-2 px-4 text-center w-20 font-normal" style={{ color: '#fbbf24' }}>Resumo</th>
-                          <th className="py-2 px-4 text-center w-20 font-normal" style={{ color: '#c084fc' }}>Revisão</th>
-                          <th className="py-2 px-4 text-center w-20 font-normal">Simulado</th>
-                          <th className="py-2 px-4 text-center w-28 font-normal">Ação</th>
+                        <tr
+                          className="text-[11px] font-medium"
+                          style={{
+                            color: '#475569',
+                            background: 'linear-gradient(180deg, #F1F5FB 0%, #E6EEF9 100%)',
+                            borderBottom: '1px solid #C7D5EA',
+                          }}
+                        >
+                          <th className="py-2.5 px-4 w-16 text-center font-medium" style={{ borderTopLeftRadius: 8 }}>Código</th>
+                          <th className="py-2.5 px-4 font-medium">Subtópico do edital oficial</th>
+                          <th className="py-2.5 px-4 text-center w-20 font-medium" style={{ color: '#2563EB' }}>Estudo</th>
+                          <th className="py-2.5 px-4 text-center w-20 font-medium" style={{ color: '#D97706' }}>Resumo</th>
+                          <th className="py-2.5 px-4 text-center w-20 font-medium" style={{ color: '#9333EA' }}>Revisão</th>
+                          <th className="py-2.5 px-4 text-center w-20 font-medium">Simulado</th>
+                          <th className="py-2.5 px-4 text-center w-28 font-medium" style={{ borderTopRightRadius: 8 }}>Ação</th>
                         </tr>
                       </thead>
                       <tbody>
