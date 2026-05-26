@@ -474,27 +474,28 @@ export default function Treinar({ selectedTaskToTrain, onQuestionAnswered, onFoc
                   disabled={hasAnswered}
                   className={`p-4 rounded-xl border font-bold text-center transition-all ${
                     selectedAnswer === 'C' 
-                      ? 'bg-emerald-100 border-emerald-500 text-emerald-700 ring-2 ring-emerald-200 shadow-sm' 
+                      ? 'bg-emerald-600 border-emerald-700 text-white ring-2 ring-emerald-300 shadow-md' 
                       : 'bg-emerald-50 border-emerald-300 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-400'
                   }`}
                   id="btn-choice-c"
                 >
                   <span className="block text-xl mb-1">Certo</span>
-                  <span className="text-[10px] font-mono font-medium text-emerald-600/70">(Assertiva Verdadeira)</span>
+                  <span className={`text-[10px] font-mono font-medium ${selectedAnswer === 'C' ? 'text-white/80' : 'text-emerald-600/70'}`}>(Assertiva Verdadeira)</span>
                 </button>
                 <button
                   onClick={() => handleChooseAnswer('E')}
                   disabled={hasAnswered}
                   className={`p-4 rounded-xl border font-bold text-center transition-all ${
                     selectedAnswer === 'E' 
-                      ? 'bg-rose-100 border-rose-500 text-rose-700 ring-2 ring-rose-200 shadow-sm' 
+                      ? 'bg-rose-600 border-rose-700 text-white ring-2 ring-rose-300 shadow-md' 
                       : 'bg-rose-50 border-rose-300 text-rose-700 hover:bg-rose-100 hover:border-rose-400'
                   }`}
                   id="btn-choice-e"
                 >
                   <span className="block text-xl mb-1">Errado</span>
-                  <span className="text-[10px] font-mono font-medium text-rose-600/70">(Assertiva Falsa)</span>
+                  <span className={`text-[10px] font-mono font-medium ${selectedAnswer === 'E' ? 'text-white/80' : 'text-rose-600/70'}`}>(Assertiva Falsa)</span>
                 </button>
+
               </div>
 
               {/* Confirm / Action Buttons */}
