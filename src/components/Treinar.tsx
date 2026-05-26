@@ -474,26 +474,26 @@ export default function Treinar({ selectedTaskToTrain, onQuestionAnswered, onFoc
                   disabled={hasAnswered}
                   className={`p-4 rounded-xl border font-bold text-center transition-all ${
                     selectedAnswer === 'C' 
-                      ? 'bg-green-950/40 border-green-500 text-green-400 ring-2 ring-green-950 shadow-md' 
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
+                      ? 'bg-emerald-100 border-emerald-500 text-emerald-700 ring-2 ring-emerald-200 shadow-sm' 
+                      : 'bg-emerald-50 border-emerald-300 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-400'
                   }`}
                   id="btn-choice-c"
                 >
                   <span className="block text-xl mb-1">Certo</span>
-                  <span className="text-[10px] font-mono font-medium text-slate-500">(Assertiva Verdadeira)</span>
+                  <span className="text-[10px] font-mono font-medium text-emerald-600/70">(Assertiva Verdadeira)</span>
                 </button>
                 <button
                   onClick={() => handleChooseAnswer('E')}
                   disabled={hasAnswered}
                   className={`p-4 rounded-xl border font-bold text-center transition-all ${
                     selectedAnswer === 'E' 
-                      ? 'bg-red-950/50 border-red-500 text-red-300 ring-2 ring-red-950 shadow-md' 
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
+                      ? 'bg-rose-100 border-rose-500 text-rose-700 ring-2 ring-rose-200 shadow-sm' 
+                      : 'bg-rose-50 border-rose-300 text-rose-700 hover:bg-rose-100 hover:border-rose-400'
                   }`}
                   id="btn-choice-e"
                 >
                   <span className="block text-xl mb-1">Errado</span>
-                  <span className="text-[10px] font-mono font-medium text-slate-500">(Assertiva Falsa)</span>
+                  <span className="text-[10px] font-mono font-medium text-rose-600/70">(Assertiva Falsa)</span>
                 </button>
               </div>
 
@@ -692,28 +692,28 @@ export default function Treinar({ selectedTaskToTrain, onQuestionAnswered, onFoc
                     key={item.id}
                     className={`p-4 border rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all ${
                       isUrgent 
-                        ? 'bg-slate-950 border-amber-500/40 shadow-sm hover:border-amber-500/60' 
-                        : 'bg-slate-950 border-slate-800/80 hover:border-slate-700'
+                        ? 'bg-white border-red-200 shadow-sm hover:border-red-300' 
+                        : 'bg-white border-slate-200 hover:border-slate-300'
                     }`}
                     id={`spaced-card-item-${item.id}`}
                   >
                     <div className="space-y-1.5 flex-1 select-none">
                       <div className="flex items-center flex-wrap gap-2">
-                        <span className="text-[9px] font-mono uppercase bg-slate-900 border border-slate-800 text-slate-400 py-0.5 px-2 rounded-md tracking-wider">
+                        <span className="text-[9px] font-mono uppercase bg-slate-100 border border-slate-200 text-slate-600 py-0.5 px-2 rounded-md tracking-wider">
                           {item.discipline}
                         </span>
                         
                         {isUrgent ? (
-                          <span className="text-[9px] font-mono bg-amber-950/60 border border-amber-900/50 text-amber-500 py-0.5 px-2 rounded-md font-extrabold flex items-center gap-1 animate-pulse">
+                          <span className="text-[9px] font-mono bg-red-50 border border-red-200 text-red-700 py-0.5 px-2 rounded-md font-extrabold flex items-center gap-1 animate-pulse">
                             🚨 Urgente (Atrasado)
                           </span>
                         ) : (
-                          <span className="text-[9px] font-mono bg-slate-900 border border-slate-800/80 text-slate-400 py-0.5 px-2 rounded-md font-bold">
+                          <span className="text-[9px] font-mono bg-slate-50 border border-slate-200 text-slate-600 py-0.5 px-2 rounded-md font-bold">
                             📅 Em {diffDays === 1 ? '1 dia' : `${diffDays} dias`} ({item.nextReviewDate.split('-').reverse().slice(0, 2).join('/')})
                           </span>
                         )}
 
-                        <span className="text-[9px] font-mono bg-slate-900 border border-slate-800/60 text-[#F97316]/80 py-0.5 px-1.5 rounded font-semibold">
+                        <span className="text-[9px] font-mono bg-blue-50 border border-blue-200 text-blue-700 py-0.5 px-1.5 rounded font-semibold">
                           Intervalo: {item.intervalDays} {item.intervalDays === 1 ? 'dia' : 'dias'}
                         </span>
                       </div>

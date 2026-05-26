@@ -163,14 +163,14 @@ export default function RadarContran() {
     <div className="space-y-6" id="radar-contran-container">
       {/* HEADER ROW WITH GLOWING RADAR EFFECTS */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
 
         <div className="space-y-2 relative z-10 max-w-xl text-center md:text-left">
-          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 font-mono text-xs px-2.5 py-1 rounded-full uppercase font-bold tracking-wider">
+          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono text-xs px-2.5 py-1 rounded-full uppercase font-bold tracking-wider">
             <Sparkles className="w-3.5 h-3.5" /> Exclusividade ProvaX AI
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-white select-text">
-            Radar de Resoluções do <span className="text-amber-400">CONTRAN</span>
+            Radar de Resoluções do <span className="text-blue-400">CONTRAN</span>
           </h1>
           <p className="text-slate-400 text-xs sm:text-sm font-sans select-text">
             Mapeamos o comportamento histórico das bancas (CEBRASPE) em relação às Resoluções do CONTRAN mais cobradas no edital da PRF. Analise as pegadinhas e treine instantaneamente.
@@ -178,34 +178,34 @@ export default function RadarContran() {
         </div>
 
         {/* RADAR INTERACTIVE GLOWING VISUALIZER */}
-        <div className="relative w-36 h-36 border border-amber-500/15 rounded-full flex items-center justify-center bg-slate-950/80 shrink-0 shadow-lg cursor-pointer" onClick={triggerRadarPulse}>
+        <div className="relative w-36 h-36 border border-blue-500/15 rounded-full flex items-center justify-center bg-slate-950/80 shrink-0 shadow-lg cursor-pointer" onClick={triggerRadarPulse}>
           {/* Radial grids */}
-          <div className="absolute w-28 h-28 border border-amber-500/10 rounded-full" />
-          <div className="absolute w-16 h-16 border border-amber-500/10 rounded-full" />
+          <div className="absolute w-28 h-28 border border-blue-500/10 rounded-full" />
+          <div className="absolute w-16 h-16 border border-blue-500/10 rounded-full" />
           
           {/* Sweep Line */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-transparent to-amber-500/10 animate-[spin_4s_linear_infinite]" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-transparent to-blue-500/10 animate-[spin_4s_linear_infinite]" />
           
           {/* Active target nodes */}
-          <div className="absolute top-7 left-10 w-2.5 h-2.5 bg-amber-400 rounded-full animate-ping" />
-          <div className="absolute top-7 left-10 w-2 h-2 bg-amber-400 rounded-full" />
+          <div className="absolute top-7 left-10 w-2.5 h-2.5 bg-blue-400 rounded-full animate-ping" />
+          <div className="absolute top-7 left-10 w-2 h-2 bg-blue-400 rounded-full" />
 
           <div className="absolute bottom-10 right-8 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
           <div className="absolute top-16 right-5 w-1.5 h-1.5 bg-yellow-500 rounded-full opacity-60" />
 
           {/* Crosshair grids */}
-          <div className="absolute w-full h-px bg-amber-500/10" />
-          <div className="absolute h-full w-px bg-amber-500/10" />
+          <div className="absolute w-full h-px bg-blue-500/10" />
+          <div className="absolute h-full w-px bg-blue-500/10" />
 
           {/* Core content */}
           <div className="z-10 text-center flex flex-col items-center">
             <span className="text-[9px] font-mono text-slate-500 font-bold tracking-widest leading-none">ATENDIMENTO</span>
-            <span className="text-sm font-mono font-black text-amber-400 leading-none mt-1">SCAN-SCAN</span>
+            <span className="text-sm font-mono font-black text-blue-400 leading-none mt-1">SCAN-SCAN</span>
             <span className="text-[8px] text-emerald-400 font-bold block mt-1 uppercase tracking-tighter">● SINAL PRF OK</span>
           </div>
 
           {/* Pulse Ripple Effect */}
-          <span key={radarPulseCount} className="absolute inset-0 border-2 border-amber-500/30 rounded-full animate-ping opacity-0" style={{ animationDuration: '1.2s' }} />
+          <span key={radarPulseCount} className="absolute inset-0 border-2 border-blue-500/30 rounded-full animate-ping opacity-0" style={{ animationDuration: '1.2s' }} />
         </div>
       </div>
 
@@ -225,7 +225,7 @@ export default function RadarContran() {
               const relClass = res.relevance === 'Máxima' 
                 ? 'bg-red-500/10 border-red-500/20 text-red-400'
                 : res.relevance === 'Alta'
-                ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
                 : 'bg-slate-850 border-slate-800 text-slate-400';
 
               // Status dot style
@@ -241,13 +241,13 @@ export default function RadarContran() {
                   onClick={() => handleSelectRes(res.id)}
                   className={`w-full text-left p-3.5 border rounded-xl transition-all cursor-pointer flex flex-col gap-2 relative overflow-hidden select-none ${
                     isActive 
-                      ? 'bg-slate-950 border-amber-500/60 shadow-md translate-x-1.5' 
+                      ? 'bg-slate-950 border-blue-500/60 shadow-md translate-x-1.5' 
                       : 'bg-slate-900/40 border-slate-850 text-slate-400 hover:border-slate-800 hover:bg-slate-950/20'
                   }`}
                   id={`btn-contran-tab-${res.id}`}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className={`font-mono font-bold text-xs uppercase ${isActive ? 'text-amber-400' : 'text-slate-300'}`}>
+                    <span className={`font-mono font-bold text-xs uppercase ${isActive ? 'text-blue-400' : 'text-slate-300'}`}>
                       {res.num}
                     </span>
                     <span className={`text-[8.5px] font-mono font-bold uppercase border px-1.5 py-0.5 rounded ${relClass}`}>
@@ -269,7 +269,7 @@ export default function RadarContran() {
 
                   {/* Tiny active slide highlight */}
                   {isActive && (
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-400" />
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-400" />
                   )}
                 </button>
               );
@@ -284,7 +284,7 @@ export default function RadarContran() {
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800">
               <div className="space-y-1">
-                <span className="text-[10px] font-mono text-amber-500 font-extrabold uppercase bg-amber-500/10 border border-amber-500/15 px-2.5 py-0.5 rounded">
+                <span className="text-[10px] font-mono text-blue-500 font-extrabold uppercase bg-blue-500/10 border border-blue-500/15 px-2.5 py-0.5 rounded">
                   Foco Edital PRF • {activeRes.num}
                 </span>
                 <h2 className="text-lg font-black text-white">{activeRes.title}</h2>
@@ -300,8 +300,8 @@ export default function RadarContran() {
                 onClick={() => { playClickSound(); setActiveTab('summary'); }}
                 className={`flex-1 py-2.5 text-center font-bold font-mono text-xs transition-colors flex items-center justify-center gap-1.5 border-b-2 cursor-pointer ${
                   activeTab === 'summary'
-                    ? 'border-amber-400 text-amber-400 bg-slate-950/20'
-                    : 'border-transparent text-slate-500 hover:text-slate-350'
+                    ? 'border-blue-400 text-blue-400 bg-slate-950/20'
+                    : 'border-transparent text-slate-500 hover:text-slate-300'
                 }`}
               >
                 <BookOpen className="w-4 h-4" /> Resumo Estratégico & Pegadinhas
@@ -310,8 +310,8 @@ export default function RadarContran() {
                 onClick={() => { playClickSound(); setActiveTab('questions'); }}
                 className={`flex-1 py-2.5 text-center font-bold font-mono text-xs transition-colors flex items-center justify-center gap-1.5 border-b-2 cursor-pointer ${
                   activeTab === 'questions'
-                    ? 'border-amber-400 text-amber-400 bg-slate-950/20'
-                    : 'border-transparent text-slate-500 hover:text-slate-350'
+                    ? 'border-blue-400 text-blue-400 bg-slate-950/20'
+                    : 'border-transparent text-slate-500 hover:text-slate-300'
                 }`}
               >
                 <Award className="w-4 h-4" /> Desafio de Fixação (CEBRASPE)
@@ -325,8 +325,8 @@ export default function RadarContran() {
               {activeTab === 'summary' && (
                 <div className="space-y-5 animate-fade-in" id="contran-summary-content">
                   <div className="space-y-1.5">
-                    <h4 className="text-xs uppercase font-mono text-[#F59E0B] font-extrabold tracking-wider flex items-center gap-1.5">
-                      <Info className="w-4 h-4 text-amber-500" /> Orientação de Estudo da Mentora Athena:
+                    <h4 className="text-xs uppercase font-mono text-[#1B4FD8] font-extrabold tracking-wider flex items-center gap-1.5">
+                      <Info className="w-4 h-4 text-blue-500" /> Orientação de Estudo da Mentora Athena:
                     </h4>
                     <p className="text-xs leading-relaxed text-slate-300 font-sans select-text">
                       {activeRes.tacticalSummary}
@@ -334,7 +334,7 @@ export default function RadarContran() {
                   </div>
 
                   {/* PEGADINHAS DE PROVA */}
-                  <div className="bg-slate-950 border border-amber-950/30 rounded-xl p-4 space-y-3 relative overflow-hidden">
+                  <div className="bg-slate-950 border border-blue-950/30 rounded-xl p-4 space-y-3 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-12 h-12 bg-red-500/5 rotate-45 transform translate-x-4 -translate-y-4 pointer-events-none" />
                     
                     <h4 className="text-xs font-mono font-bold text-red-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -356,9 +356,9 @@ export default function RadarContran() {
                   <div className="flex justify-end pt-2">
                     <button
                       onClick={() => { playClickSound(); setActiveTab('questions'); }}
-                      className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-lg text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer"
+                      className="px-4 py-2 bg-[#1B4FD8] hover:bg-[#1339A8] text-white font-black rounded-lg text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer"
                     >
-                      <Play className="w-3.5 h-3.5 fill-slate-950" /> Medir Conhecimento no Desafio
+                      <Play className="w-3.5 h-3.5 fill-white" /> Medir Conhecimento no Desafio
                     </button>
                   </div>
                 </div>
@@ -370,7 +370,7 @@ export default function RadarContran() {
                   <div className="bg-slate-950 border border-slate-850 p-4.5 rounded-xl space-y-2">
                     <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 pb-2 border-b border-slate-900">
                       <span>Gabarito Inteligente Adaptativo</span>
-                      <span className="text-amber-400 font-bold uppercase tracking-wide">CEBRASPE Simulação</span>
+                      <span className="text-blue-400 font-bold uppercase tracking-wide">CEBRASPE Simulação</span>
                     </div>
                     <p className="text-slate-200 text-xs sm:text-sm leading-relaxed font-sans select-text" id="contran-statement-text">
                       {activeRes.testQuestion.statement}
@@ -422,7 +422,7 @@ export default function RadarContran() {
                       <div className="athena-box-style p-4 rounded-xl border flex gap-3">
                         <span className="text-2xl shrink-0 mt-0.5">🦉</span>
                         <div className="space-y-1">
-                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-500 block leading-none">Explicação Estratégica da Mentora:</span>
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-500 block leading-none">Explicação Estratégica da Mentora:</span>
                           <p className="text-xs text-slate-300 leading-relaxed font-sans select-text">
                             {activeRes.testQuestion.explanation}
                           </p>
