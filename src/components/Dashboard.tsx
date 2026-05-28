@@ -49,6 +49,8 @@ export default function Dashboard({
   const totalCorrect = progress?.totalCorrect ?? 0;
   const totalIncorrect = progress?.totalIncorrect ?? 0;
   const notaLiquida = totalCorrect - totalIncorrect;
+  const approvalProb = progress?.currentApprovalProbability ?? 0;
+  const CUT_SCORE = 82; // mediana histórica de corte PRF
 
   // Mission goals
   const goals = [
@@ -168,6 +170,71 @@ export default function Dashboard({
               {getDaysRemaining()}
             </div>
             <div style={{ fontSize: 11, color: MUTED }}>dias restantes</div>
+          </div>
+        </div>
+
+        {/* PROBABILIDADE DE APROVAÇÃO */}
+        <div
+          style={{
+            ...card,
+            background: approvalProb >= CUT_SCORE
+              ? 'linear-gradient(135deg, #E7F6EE 0%, #fff 100%)'
+              : `linear-gradient(135deg, ${BLUE_SOFT} 0%, #fff 100%)`,
+            border: `1px solid ${approvalProb >= CUT_SCORE ? '#A7F3D0' : BLUE_BORDER}`,
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
+            <div>
+              <div style={{ fontSize: 10, color: approvalProb >= CUT_SCORE ? GREEN : BLUE, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>
+                Probabilidade de Aprovação PRF
+              </div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                <span style={{ fontSize: 42, fontWeight: 900, color: approvalProb >= CUT_SCORE ? GREEN : BLUE, lineHeight: 1 }}>
+                  {approvalProb.toFixed(1)}%
+                </span>
+                <span style={{ fontSize: 12, color: MUTED }}>
+                  {approvalProb >= CUT_SCORE ? 'acima da nota de corte' : `faltam ${(CUT_SCORE - approvalProb).toFixed(1)}% para o corte`}
+                </span>
+              </div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: 10, color: MUTED, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>Corte estimado PRF</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: ORANGE }}>{CUT_SCORE}%</div>
+            </div>
+          </div>
+
+          {/* Barra de progresso com marcador de corte */}
+          <div style={{ marginTop: 14 }}>
+            <div style={{ height: 10, background: '#E5EAF2', borderRadius: 999, overflow: 'visible', position: 'relative' }}>
+              <div
+                style={{
+                  height: '100%',
+                  width: `${Math.min(approvalProb, 100)}%`,
+                  background: approvalProb >= CUT_SCORE
+                    ? `linear-gradient(90deg, ${GREEN}, #34D399)`
+                    : `linear-gradient(90deg, ${BLUE_DARK}, ${BLUE})`,
+                  borderRadius: 999,
+                  transition: 'width 0.5s ease',
+                }}
+              />
+              {/* Marcador da nota de corte */}
+              <div
+                style={{
+                  position: 'absolute',
+                  left: `${CUT_SCORE}%`,
+                  top: -4,
+                  bottom: -4,
+                  width: 2,
+                  background: ORANGE,
+                  borderRadius: 2,
+                }}
+              />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
+              <span style={{ fontSize: 10, color: MUTED }}>0%</span>
+              <span style={{ fontSize: 10, color: ORANGE, fontWeight: 700 }}>▲ Corte {CUT_SCORE}%</span>
+              <span style={{ fontSize: 10, color: MUTED }}>100%</span>
+            </div>
           </div>
         </div>
 
