@@ -52,6 +52,9 @@ export default function Dashboard({
   const notaLiquida = totalCorrect - totalIncorrect;
   const approvalProb = progress?.currentApprovalProbability ?? 0;
   const CUT_SCORE = 82; // mediana histórica de corte PRF
+  const minutosHoje = progress?.minutosHoje ?? 0;
+  const horasHoje = Math.floor(minutosHoje / 60);
+  const minsResto = minutosHoje % 60;
 
   // Mission goals
   const goals = [
@@ -458,33 +461,55 @@ export default function Dashboard({
           </button>
         </div>
 
-        {/* STATS GRID */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+        {/* STATS GRID 2×2 */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          {/* Taxa de acerto */}
           <div style={{ ...card, borderRadius: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
               <Target size={15} color={GREEN} />
               <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Taxa de acerto</span>
             </div>
-            <div style={{ fontSize: 24, fontWeight: 800, color: GREEN }}>{Math.round(taxa)}%</div>
-            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>{totalAnswered} questões</div>
+            <div style={{ fontSize: 26, fontWeight: 800, color: GREEN }}>{Math.round(taxa)}%</div>
+            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>
+              <span style={{ color: GREEN, fontWeight: 600 }}>{totalCorrect}C</span>
+              {' '}<span style={{ color: RED, fontWeight: 600 }}>{totalIncorrect}E</span>
+              {' '}<span>de {totalAnswered}</span>
+            </div>
           </div>
+
+          {/* Nota Líquida CEBRASPE */}
           <div style={{ ...card, borderRadius: 14, border: `1px solid ${notaLiquida >= 0 ? '#BBF7D0' : '#FECACA'}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
               <MinusCircle size={15} color={notaLiquida >= 0 ? GREEN : RED} />
               <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Nota Líquida</span>
             </div>
-            <div style={{ fontSize: 24, fontWeight: 800, color: notaLiquida >= 0 ? GREEN : RED }}>
+            <div style={{ fontSize: 26, fontWeight: 800, color: notaLiquida >= 0 ? GREEN : RED }}>
               {notaLiquida > 0 ? `+${notaLiquida}` : notaLiquida}
             </div>
-            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>acertos − erros</div>
+            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>acertos − erros (CEBRASPE)</div>
           </div>
+
+          {/* Total de questões */}
+          <div style={{ ...card, borderRadius: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+              <Target size={15} color={BLUE} />
+              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Total de questões</span>
+            </div>
+            <div style={{ fontSize: 26, fontWeight: 800, color: BLUE }}>{totalAnswered}</div>
+            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>respondidas no total</div>
+          </div>
+
+          {/* Horas estudadas hoje */}
           <div style={{ ...card, borderRadius: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
               <Zap size={15} color={ORANGE} />
-              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Streak</span>
+              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Foco hoje</span>
             </div>
-            <div style={{ fontSize: 24, fontWeight: 800, color: ORANGE }}>
-              {streak} <span style={{ fontSize: 13, fontWeight: 500, color: MUTED }}>dias</span>
+            <div style={{ fontSize: 26, fontWeight: 800, color: minutosHoje > 0 ? ORANGE : MUTED }}>
+              {horasHoje > 0 ? `${horasHoje}h` : ''}{minsResto > 0 ? `${minsResto}m` : minutosHoje === 0 ? '—' : ''}
+            </div>
+            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>
+              {streak > 0 ? `${streak} dias seguidos` : 'inicie uma sessão'}
             </div>
           </div>
         </div>

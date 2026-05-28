@@ -138,6 +138,8 @@ export default function App() {
     totalQuestionsAnswered: 12,
     totalCorrect: 9,
     totalIncorrect: 3,
+    minutosHoje: 0,
+    minutosHojeData: new Date().toISOString().split('T')[0],
     overallAccuracyRate: 75.0,
     syllabusCoverage: 18.4,
     currentApprovalProbability: 41.2,
@@ -585,11 +587,15 @@ export default function App() {
     setProgress(prev => {
       const bonusCoverage = Math.round((prev.syllabusCoverage + (minutes * 0.05)) * 100) / 100;
       const bonusProb = Math.round((prev.currentApprovalProbability + 0.8) * 10) / 10;
+      const hoje = new Date().toISOString().split('T')[0];
+      const minutosHoje = prev.minutosHojeData === hoje ? prev.minutosHoje + minutes : minutes;
       return {
         ...prev,
         syllabusCoverage: Math.min(100.0, bonusCoverage),
         currentApprovalProbability: Math.min(99.8, bonusProb),
-        daysConsecutive: prev.daysConsecutive + 1
+        daysConsecutive: prev.daysConsecutive + 1,
+        minutosHoje,
+        minutosHojeData: hoje,
       };
     });
   };
