@@ -361,27 +361,28 @@ export default function Treinar({ selectedTaskToTrain, onQuestionAnswered, onFoc
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl" id="train-view-container">
       {/* 1. Interactive Tabs */}
-      <div className="flex border-b border-slate-800 pb-3 justify-between items-center gap-4 mb-6">
-        <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 w-full sm:w-auto">
+      <div className="border-b border-slate-800 pb-3 mb-6 -mx-2 px-2">
+        <div className="flex flex-nowrap sm:flex-wrap gap-2 overflow-x-auto sm:overflow-visible scrollbar-thin scrollbar-thumb-slate-700 snap-x snap-mandatory">
           {[
-            { id: 'questoes', label: 'Questões CEBRASPE', icon: <BookOpen className="w-4 h-4" /> },
-            { id: 'revisao', label: 'Revisão Espaçada', icon: <Layers className="w-4 h-4" /> },
-            { id: 'flashcards', label: 'Flashcards', icon: <RefreshCw className="w-4 h-4" /> },
-            { id: 'contran', label: 'Radar CONTRAN', icon: <Shield className="w-4 h-4 text-amber-500 animate-pulse" /> },
-            { id: 'foco', label: 'Modo Foco Pomodoro', icon: <Clock className="w-4 h-4" /> }
-
+            { id: 'questoes', label: 'Questões CEBRASPE', shortLabel: 'Questões', icon: <BookOpen className="w-4 h-4" /> },
+            { id: 'revisao', label: 'Revisão Espaçada', shortLabel: 'Revisão', icon: <Layers className="w-4 h-4" /> },
+            { id: 'flashcards', label: 'Flashcards', shortLabel: 'Flashcards', icon: <RefreshCw className="w-4 h-4" /> },
+            { id: 'contran', label: 'Radar CONTRAN', shortLabel: 'Radar CONTRAN', icon: <Shield className="w-4 h-4 text-amber-500 animate-pulse" /> },
+            { id: 'foco', label: 'Modo Foco Pomodoro', shortLabel: 'Pomodoro', icon: <Clock className="w-4 h-4" /> }
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as ModeType)}
-              className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold font-mono transition-colors border ${
+              className={`shrink-0 snap-start flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold font-mono transition-colors border whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-emerald-950/40 border-emerald-500 text-white shadow-md'
                   : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
               }`}
               id={`tab-${tab.id}`}
             >
-              {tab.icon} {tab.label}
+              {tab.icon}
+              <span className="sm:hidden">{tab.shortLabel}</span>
+              <span className="hidden sm:inline">{tab.label}</span>
             </button>
           ))}
         </div>
