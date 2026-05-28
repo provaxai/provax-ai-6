@@ -4,7 +4,7 @@ import { Question } from '../types';
 import { AlarmClock, Award, HelpCircle, CheckCircle, AlertOctagon, Trophy, Percent, RefreshCw, Sparkles, Flame } from 'lucide-react';
 
 interface SimuladosProps {
-  onSimuladoFinished: (score: number, totalQuestions: number) => void;
+  onSimuladoFinished: (score: number, totalQuestions: number, corrects: number, incorrects: number) => void;
 }
 
 type SimType = 'completo' | 'mini' | 'cebraspe' | 'ia';
@@ -97,9 +97,8 @@ export default function Simulados({ onSimuladoFinished }: SimuladosProps) {
     const endedTime = Date.now();
     setExamDurationSeconds(Math.floor((endedTime - startTimeRef.current) / 1000));
 
-    // Send liquidated score statistics back to progress parent
-    const { liquidatedPoints } = getCalculatedScores();
-    onSimuladoFinished(liquidatedPoints, currentExamQuestions.length);
+    const { liquidatedPoints, corrects, incorrects } = getCalculatedScores();
+    onSimuladoFinished(liquidatedPoints, currentExamQuestions.length, corrects, incorrects);
   };
 
   const selectAnswer = (ans: 'C' | 'E') => {

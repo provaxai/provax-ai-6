@@ -6,6 +6,7 @@ export const INITIAL_PROGRESS: ProgressData = {
   overallAccuracyRate: 64.2,
   totalQuestionsAnswered: 134,
   totalCorrect: 86,
+  totalIncorrect: 48,
   syllabusCoverage: 28.0,
   disciplinePerformance: {
     'Língua Portuguesa': { total: 30, correct: 21, efficiency: 70, status: 'safe' },

@@ -137,6 +137,7 @@ export default function App() {
   const [progress, setProgress] = useState<ProgressData>({
     totalQuestionsAnswered: 12,
     totalCorrect: 9,
+    totalIncorrect: 3,
     overallAccuracyRate: 75.0,
     syllabusCoverage: 18.4,
     currentApprovalProbability: 41.2,
@@ -552,10 +553,13 @@ export default function App() {
       const probImpact = isCorrect ? 0.3 : -0.2;
       const updatedProb = Math.min(99.6, Math.max(10.0, Math.round((originalProb + probImpact) * 10) / 10));
 
+      const incorrects = isCorrect ? prev.totalIncorrect : prev.totalIncorrect + 1;
+
       return {
         ...prev,
         totalQuestionsAnswered: answered,
         totalCorrect: corrects,
+        totalIncorrect: incorrects,
         overallAccuracyRate: Math.round((corrects / answered) * 100),
         disciplinePerformance: updatedPerformance,
         currentApprovalProbability: updatedProb
@@ -724,17 +728,19 @@ export default function App() {
       case 'simulados':
         return (
           <Simulados 
-            onSimuladoFinished={(points: number, count: number) => {
-              // Increase overall metrics based on simulated trial completed
+            onSimuladoFinished={(points: number, count: number, corrects: number, incorrects: number) => {
               setProgress(prev => {
-                const totalScore = Math.max(12, prev.totalQuestionsAnswered + count);
+                const newTotal = prev.totalQuestionsAnswered + count;
+                const newCorrect = prev.totalCorrect + corrects;
+                const newIncorrect = prev.totalIncorrect + incorrects;
                 const originalProb = prev.currentApprovalProbability;
-                // Significant impact on preditive probability matching points gained
                 const multiplier = points > (count * 0.6) ? 2.5 : -1.8;
                 return {
                   ...prev,
-                  totalQuestionsAnswered: totalScore,
-                  totalCorrect: Math.max(9, prev.totalCorrect + Math.max(0, points)),
+                  totalQuestionsAnswered: newTotal,
+                  totalCorrect: newCorrect,
+                  totalIncorrect: newIncorrect,
+                  overallAccuracyRate: Math.round((newCorrect / newTotal) * 100),
                   currentApprovalProbability: Math.min(99.6, Math.max(10.5, Math.round((originalProb + multiplier) * 10) / 10)),
                   daysConsecutive: prev.daysConsecutive + 1
                 };

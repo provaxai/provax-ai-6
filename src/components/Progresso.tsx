@@ -41,7 +41,7 @@ export default function Progresso({ progress, theme = 'dark' }: ProgressoProps) 
 
   // Specific CEBRASPE diagnostics
   const getCebraspeDiagnosis = () => {
-    const incorrectCount = progress.totalQuestionsAnswered - progress.totalCorrect;
+    const incorrectCount = progress.totalIncorrect;
     const netCEBRASPE = progress.totalCorrect - incorrectCount;
     return {
       netScore: netCEBRASPE,
@@ -177,7 +177,7 @@ export default function Progresso({ progress, theme = 'dark' }: ProgressoProps) 
               <div className="flex justify-between items-center text-xs">
                 <span className="text-slate-400 font-medium font-sans">Questões:</span>
                 <span className="font-mono font-bold text-slate-300 text-right">
-                  {progress.totalQuestionsAnswered} <span className="text-[10px] text-slate-500 font-normal">({progress.totalCorrect} certas)</span>
+                  {progress.totalQuestionsAnswered} <span className="text-[10px] font-normal"><span className="text-emerald-400">{progress.totalCorrect}C</span> <span className="text-red-400">{progress.totalIncorrect}E</span></span>
                 </span>
               </div>
               <div className="flex justify-between items-center text-xs">

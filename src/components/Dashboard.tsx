@@ -1,6 +1,6 @@
 import React from 'react';
 import { StudySchedule, ProgressData, StudyTask } from '../types';
-import { Check, Play, ArrowRight, Shield, Target, Zap } from 'lucide-react';
+import { Check, Play, ArrowRight, Shield, Target, Zap, MinusCircle } from 'lucide-react';
 
 interface DashboardProps {
   onboardingName: string;
@@ -46,6 +46,9 @@ export default function Dashboard({
   const totalAnswered = progress?.totalQuestionsAnswered ?? 0;
   const taxa = progress?.overallAccuracyRate ?? 0;
   const streak = progress?.daysConsecutive ?? 0;
+  const totalCorrect = progress?.totalCorrect ?? 0;
+  const totalIncorrect = progress?.totalIncorrect ?? 0;
+  const notaLiquida = totalCorrect - totalIncorrect;
 
   // Mission goals
   const goals = [
@@ -277,21 +280,32 @@ export default function Dashboard({
         </div>
 
         {/* STATS GRID */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
           <div style={{ ...card, borderRadius: 14 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-              <Target size={16} color={GREEN} />
-              <span style={{ fontSize: 11, color: MUTED, fontWeight: 600 }}>Taxa de acerto</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+              <Target size={15} color={GREEN} />
+              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Taxa de acerto</span>
             </div>
-            <div style={{ fontSize: 26, fontWeight: 800, color: GREEN }}>{Math.round(taxa)}%</div>
+            <div style={{ fontSize: 24, fontWeight: 800, color: GREEN }}>{Math.round(taxa)}%</div>
+            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>{totalAnswered} questões</div>
+          </div>
+          <div style={{ ...card, borderRadius: 14, border: `1px solid ${notaLiquida >= 0 ? '#BBF7D0' : '#FECACA'}` }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+              <MinusCircle size={15} color={notaLiquida >= 0 ? GREEN : RED} />
+              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Nota Líquida</span>
+            </div>
+            <div style={{ fontSize: 24, fontWeight: 800, color: notaLiquida >= 0 ? GREEN : RED }}>
+              {notaLiquida > 0 ? `+${notaLiquida}` : notaLiquida}
+            </div>
+            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>acertos − erros</div>
           </div>
           <div style={{ ...card, borderRadius: 14 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-              <Zap size={16} color={ORANGE} />
-              <span style={{ fontSize: 11, color: MUTED, fontWeight: 600 }}>Streak ativo</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+              <Zap size={15} color={ORANGE} />
+              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Streak</span>
             </div>
-            <div style={{ fontSize: 26, fontWeight: 800, color: ORANGE }}>
-              {streak} <span style={{ fontSize: 14, fontWeight: 500, color: MUTED }}>dias</span>
+            <div style={{ fontSize: 24, fontWeight: 800, color: ORANGE }}>
+              {streak} <span style={{ fontSize: 13, fontWeight: 500, color: MUTED }}>dias</span>
             </div>
           </div>
         </div>

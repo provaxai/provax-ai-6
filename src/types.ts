@@ -96,6 +96,7 @@ export interface ProgressData {
   overallAccuracyRate: number; // %
   totalQuestionsAnswered: number;
   totalCorrect: number;
+  totalIncorrect: number; // tracked separately to compute CEBRASPE liquid score
   syllabusCoverage: number; // %
   disciplinePerformance: {
     [discipline: string]: {
