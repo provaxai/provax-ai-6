@@ -1,6 +1,6 @@
 import React from 'react';
 import { StudySchedule, ProgressData, StudyTask } from '../types';
-import { Check, Play, ArrowRight, Shield, Target, Zap, MinusCircle, CalendarDays, Clock } from 'lucide-react';
+import { Check, Play, ArrowRight, Shield, Target, Zap, MinusCircle, CalendarDays, Clock, Brain, AlertTriangle } from 'lucide-react';
 
 interface DashboardProps {
   onboardingName: string;
