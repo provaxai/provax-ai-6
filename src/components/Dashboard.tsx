@@ -1,6 +1,6 @@
 import React from 'react';
 import { StudySchedule, ProgressData, StudyTask } from '../types';
-import { Check, Play, ArrowRight, Shield, Target, Zap, MinusCircle, BookCheck } from 'lucide-react';
+import { Check, Play, ArrowRight, Shield, Target, Zap, MinusCircle } from 'lucide-react';
 
 interface DashboardProps {
   onboardingName: string;
@@ -32,6 +32,7 @@ export default function Dashboard({
   onboardingName,
   testDate,
   progress,
+  schedule,
   onNavigate,
   onSelectTaskToTrain,
 }: DashboardProps) {
@@ -51,8 +52,6 @@ export default function Dashboard({
   const notaLiquida = totalCorrect - totalIncorrect;
   const approvalProb = progress?.currentApprovalProbability ?? 0;
   const CUT_SCORE = 82; // mediana histórica de corte PRF
-  const questoesHoje = progress?.questoesHoje ?? 0;
-  const META_DIA = 20;
 
   // Mission goals
   const goals = [
@@ -239,41 +238,6 @@ export default function Dashboard({
             </div>
           </div>
         </div>
-
-        {/* QUESTÕES HOJE */}
-        {(() => {
-          const pct = Math.min((questoesHoje / META_DIA) * 100, 100);
-          const atingiu = questoesHoje >= META_DIA;
-          const barColor = atingiu ? GREEN : questoesHoje >= META_DIA * 0.5 ? ORANGE : BLUE;
-          return (
-            <div style={{ ...card, padding: '14px 18px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <BookCheck size={16} color={barColor} />
-                  <span style={{ fontSize: 13, fontWeight: 700, color: TEXT }}>Questões hoje</span>
-                  {atingiu && (
-                    <span style={{ fontSize: 10, fontWeight: 700, color: GREEN, background: '#E7F6EE', padding: '2px 8px', borderRadius: 999 }}>
-                      Meta atingida!
-                    </span>
-                  )}
-                </div>
-                <span style={{ fontSize: 22, fontWeight: 900, color: barColor, fontVariantNumeric: 'tabular-nums' }}>
-                  {questoesHoje}
-                  <span style={{ fontSize: 13, fontWeight: 500, color: MUTED }}>/{META_DIA}</span>
-                </span>
-              </div>
-              <div style={{ height: 8, background: '#E5EAF2', borderRadius: 999, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${pct}%`, background: barColor, borderRadius: 999, transition: 'width 0.4s ease' }} />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 5 }}>
-                <span style={{ fontSize: 10, color: MUTED }}>
-                  {atingiu ? 'Parabéns! Continue para superar a meta.' : `Faltam ${META_DIA - questoesHoje} questões para a meta diária`}
-                </span>
-                <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>{Math.round(pct)}%</span>
-              </div>
-            </div>
-          );
-        })()}
 
         {/* MISSION */}
         <div style={card}>

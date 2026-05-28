@@ -139,8 +139,6 @@ export default function App() {
     totalCorrect: 9,
     totalIncorrect: 3,
     overallAccuracyRate: 75.0,
-    questoesHoje: 0,
-    questoesHojeData: new Date().toISOString().split('T')[0],
     syllabusCoverage: 18.4,
     currentApprovalProbability: 41.2,
     daysConsecutive: 3,
@@ -557,9 +555,6 @@ export default function App() {
 
       const incorrects = isCorrect ? prev.totalIncorrect : prev.totalIncorrect + 1;
 
-      const hoje = new Date().toISOString().split('T')[0];
-      const questoesHoje = prev.questoesHojeData === hoje ? prev.questoesHoje + 1 : 1;
-
       return {
         ...prev,
         totalQuestionsAnswered: answered,
@@ -568,8 +563,6 @@ export default function App() {
         overallAccuracyRate: Math.round((corrects / answered) * 100),
         disciplinePerformance: updatedPerformance,
         currentApprovalProbability: updatedProb,
-        questoesHoje,
-        questoesHojeData: hoje,
       };
     });
   };
@@ -742,16 +735,12 @@ export default function App() {
                 const newIncorrect = prev.totalIncorrect + incorrects;
                 const originalProb = prev.currentApprovalProbability;
                 const multiplier = points > (count * 0.6) ? 2.5 : -1.8;
-                const hoje = new Date().toISOString().split('T')[0];
-                const questoesHoje = prev.questoesHojeData === hoje ? prev.questoesHoje + count : count;
                 return {
                   ...prev,
                   totalQuestionsAnswered: newTotal,
                   totalCorrect: newCorrect,
                   totalIncorrect: newIncorrect,
                   overallAccuracyRate: Math.round((newCorrect / newTotal) * 100),
-                  questoesHoje,
-                  questoesHojeData: hoje,
                   currentApprovalProbability: Math.min(99.6, Math.max(10.5, Math.round((originalProb + multiplier) * 10) / 10)),
                   daysConsecutive: prev.daysConsecutive + 1
                 };
