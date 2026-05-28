@@ -35,7 +35,9 @@ export default function Dashboard({
   schedule,
   onNavigate,
   onSelectTaskToTrain,
+  theme = 'dark',
 }: DashboardProps) {
+  const isDark = theme === 'dark';
   // Countdown — placeholder target 2026-09-01
   const getDaysRemaining = () => {
     const target = new Date(testDate || '2026-09-01');
@@ -135,18 +137,29 @@ export default function Dashboard({
       ? `Seu ritmo semanal está consistente. Foque em ${worst.name} esta semana — 15 min/dia de prática ativa fecham o gap antes do próximo simulado.`
       : `Bom desempenho geral. Mantenha a constância em ${worst.name} para garantir aprovação no próximo simulado.`;
 
-  // Inline styles for a guaranteed light wrapper
+  const BG         = isDark ? '#0B1120' : '#F5F3EE';
+  const SURFACE    = isDark ? '#111827' : '#ffffff';
+  const BORDER     = isDark ? '#1F2D45' : '#E8E0D0';
+  const TXT        = isDark ? '#F1F5F9' : TEXT;
+  const MTXT       = isDark ? '#64748B' : MUTED;
+  const TRACK      = isDark ? '#1F2D45' : '#E5EAF2';
+  const DIAG_TRACK = isDark ? '#1F2D45' : '#F1ECE1';
+  const ITEM_BG    = isDark ? '#1A2540' : '#FAF7F0';
+  const BLUE_SOFT_D  = isDark ? '#0D1F3C' : BLUE_SOFT;
+  const BLUE_BOR_D   = isDark ? '#1F2D45' : BLUE_BORDER;
+
   const wrapperStyle: React.CSSProperties = {
-    background: '#F5F3EE',
+    background: BG,
     minHeight: '100%',
     padding: '18px 16px',
     fontFamily: '"DM Sans", system-ui, sans-serif',
-    color: TEXT,
+    color: TXT,
   };
   const card: React.CSSProperties = {
-    background: '#fff',
+    background: SURFACE,
+    border: `1px solid ${BORDER}`,
     borderRadius: 16,
-    boxShadow: '0 1px 6px rgba(0,0,0,0.07)',
+    boxShadow: isDark ? '0 1px 6px rgba(0,0,0,0.3)' : '0 1px 6px rgba(0,0,0,0.07)',
     padding: 18,
   };
 
@@ -156,24 +169,24 @@ export default function Dashboard({
         {/* HEADER */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
           <div>
-            <div style={{ fontSize: 11, color: MUTED, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+            <div style={{ fontSize: 11, color: MTXT, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
               Suíte de Planejamento Estratégico
             </div>
-            <h1 style={{ fontSize: 24, fontWeight: 800, margin: '6px 0 4px', color: TEXT, letterSpacing: '-0.01em' }}>
+            <h1 style={{ fontSize: 24, fontWeight: 800, margin: '6px 0 4px', color: TXT, letterSpacing: '-0.01em' }}>
               Foco na Meta, <span style={{ color: BLUE }}>{onboardingName || 'Recruta'}</span>
             </h1>
-            <p style={{ fontSize: 13, color: MUTED, margin: 0 }}>
+            <p style={{ fontSize: 13, color: MTXT, margin: 0 }}>
               Athena compilou sua agenda de alto impacto para hoje.
             </p>
           </div>
           <div style={{ ...card, padding: '10px 16px', textAlign: 'center', minWidth: 110 }}>
-            <div style={{ fontSize: 10, color: MUTED, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+            <div style={{ fontSize: 10, color: MTXT, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
               Prova Oficial
             </div>
-            <div style={{ fontSize: 28, fontWeight: 800, color: TEXT, lineHeight: 1.1, margin: '2px 0' }}>
+            <div style={{ fontSize: 28, fontWeight: 800, color: TXT, lineHeight: 1.1, margin: '2px 0' }}>
               {getDaysRemaining()}
             </div>
-            <div style={{ fontSize: 11, color: MUTED }}>dias restantes</div>
+            <div style={{ fontSize: 11, color: MTXT }}>dias restantes</div>
           </div>
         </div>
 
@@ -188,9 +201,9 @@ export default function Dashboard({
           if (dueFlashcards === 0) return null;
 
           const palette = {
-            high: { bg: '#FDECEC', border: '#F5B7B1', accent: RED, iconBg: '#FADBD8' },
-            mid: { bg: '#FFF6E5', border: '#F5D8A0', accent: ORANGE, iconBg: '#FCE9C7' },
-            low: { bg: BLUE_SOFT, border: BLUE_BORDER, accent: BLUE, iconBg: BLUE_ICON_BG },
+            high: { bg: isDark ? '#2A1010' : '#FDECEC', border: isDark ? '#4A1515' : '#F5B7B1', accent: RED, iconBg: isDark ? '#3A1515' : '#FADBD8' },
+            mid: { bg: isDark ? '#2A1E0A' : '#FFF6E5', border: isDark ? '#4A3010' : '#F5D8A0', accent: ORANGE, iconBg: isDark ? '#3A2810' : '#FCE9C7' },
+            low: { bg: BLUE_SOFT_D, border: BLUE_BOR_D, accent: BLUE, iconBg: isDark ? '#0D1F3C' : BLUE_ICON_BG },
           }[urgency];
 
           return (
@@ -245,15 +258,15 @@ export default function Dashboard({
                 <div style={{ fontSize: 10, color: palette.accent, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>
                   Revisão espaçada · Leitner
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: TEXT, lineHeight: 1.35 }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: TXT, lineHeight: 1.35 }}>
                   Você tem <span style={{ color: palette.accent }}>{dueFlashcards} flashcards</span> para revisar hoje
                   {overdue > 0 && (
-                    <span style={{ color: MUTED, fontWeight: 500 }}>
+                    <span style={{ color: MTXT, fontWeight: 500 }}>
                       {' '}— <span style={{ color: RED, fontWeight: 700 }}>{overdue} atrasados</span>
                     </span>
                   )}
                 </div>
-                <div style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>
+                <div style={{ fontSize: 11, color: MTXT, marginTop: 2 }}>
                   {urgency === 'high'
                     ? 'Risco de esquecimento alto. Revise antes da próxima sessão.'
                     : urgency === 'mid'
@@ -293,9 +306,9 @@ export default function Dashboard({
           style={{
             ...card,
             background: approvalProb >= CUT_SCORE
-              ? 'linear-gradient(135deg, #E7F6EE 0%, #fff 100%)'
-              : `linear-gradient(135deg, ${BLUE_SOFT} 0%, #fff 100%)`,
-            border: `1px solid ${approvalProb >= CUT_SCORE ? '#A7F3D0' : BLUE_BORDER}`,
+              ? isDark ? 'linear-gradient(135deg, #0D2B1E 0%, #111827 100%)' : 'linear-gradient(135deg, #E7F6EE 0%, #fff 100%)'
+              : isDark ? `linear-gradient(135deg, ${BLUE_SOFT_D} 0%, #111827 100%)` : `linear-gradient(135deg, ${BLUE_SOFT} 0%, #fff 100%)`,
+            border: `1px solid ${approvalProb >= CUT_SCORE ? (isDark ? '#1A4731' : '#A7F3D0') : BLUE_BOR_D}`,
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
@@ -307,20 +320,20 @@ export default function Dashboard({
                 <span style={{ fontSize: 42, fontWeight: 900, color: approvalProb >= CUT_SCORE ? GREEN : BLUE, lineHeight: 1 }}>
                   {approvalProb.toFixed(1)}%
                 </span>
-                <span style={{ fontSize: 12, color: MUTED }}>
+                <span style={{ fontSize: 12, color: MTXT }}>
                   {approvalProb >= CUT_SCORE ? 'acima da nota de corte' : `faltam ${(CUT_SCORE - approvalProb).toFixed(1)}% para o corte`}
                 </span>
               </div>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 10, color: MUTED, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>Corte estimado PRF</div>
+              <div style={{ fontSize: 10, color: MTXT, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>Corte estimado PRF</div>
               <div style={{ fontSize: 22, fontWeight: 800, color: ORANGE }}>{CUT_SCORE}%</div>
             </div>
           </div>
 
           {/* Barra de progresso com marcador de corte */}
           <div style={{ marginTop: 14 }}>
-            <div style={{ height: 10, background: '#E5EAF2', borderRadius: 999, overflow: 'visible', position: 'relative' }}>
+            <div style={{ height: 10, background: TRACK, borderRadius: 999, overflow: 'visible', position: 'relative' }}>
               <div
                 style={{
                   height: '100%',
@@ -346,9 +359,9 @@ export default function Dashboard({
               />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
-              <span style={{ fontSize: 10, color: MUTED }}>0%</span>
+              <span style={{ fontSize: 10, color: MTXT }}>0%</span>
               <span style={{ fontSize: 10, color: ORANGE, fontWeight: 700 }}>▲ Corte {CUT_SCORE}%</span>
-              <span style={{ fontSize: 10, color: MUTED }}>100%</span>
+              <span style={{ fontSize: 10, color: MTXT }}>100%</span>
             </div>
           </div>
         </div>
@@ -358,7 +371,7 @@ export default function Dashboard({
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
             <span
               style={{
-                background: BLUE_SOFT,
+                background: BLUE_SOFT_D,
                 color: BLUE,
                 fontSize: 10,
                 fontWeight: 700,
@@ -371,13 +384,13 @@ export default function Dashboard({
               ● Plano ativo de alto impacto
             </span>
           </div>
-          <h2 style={{ fontSize: 20, fontWeight: 700, textAlign: 'center', margin: 0, color: TEXT }}>
+          <h2 style={{ fontSize: 20, fontWeight: 700, textAlign: 'center', margin: 0, color: TXT }}>
             Missão de Hoje
           </h2>
-          <p style={{ textAlign: 'center', color: MUTED, fontSize: 12, margin: '4px 0 12px' }}>
+          <p style={{ textAlign: 'center', color: MTXT, fontSize: 12, margin: '4px 0 12px' }}>
             Legislação de Trânsito · 60 min · +50 XP
           </p>
-          <div style={{ height: 4, background: '#E5EAF2', borderRadius: 999, overflow: 'hidden', margin: '0 auto 14px' }}>
+          <div style={{ height: 4, background: TRACK, borderRadius: 999, overflow: 'hidden', margin: '0 auto 14px' }}>
             <div style={{ height: '100%', width: `${goalPercent}%`, background: BLUE, transition: 'width 0.3s' }} />
           </div>
 
@@ -392,16 +405,16 @@ export default function Dashboard({
                   alignItems: 'center',
                   gap: 10,
                   padding: '10px 12px',
-                  border: '1px solid #EFE8DA',
+                  border: `1px solid ${BORDER}`,
                   borderRadius: 12,
-                  background: '#fff',
+                  background: SURFACE,
                   cursor: 'pointer',
                   textAlign: 'left',
                   fontFamily: 'inherit',
                   transition: 'all 0.2s',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = '#FAF7F0')}
-                onMouseLeave={(e) => (e.currentTarget.style.background = '#fff')}
+                onMouseEnter={(e) => (e.currentTarget.style.background = ITEM_BG)}
+                onMouseLeave={(e) => (e.currentTarget.style.background = SURFACE)}
               >
                 <span
                   style={{
@@ -418,13 +431,13 @@ export default function Dashboard({
                 >
                   {g.done && <Check size={12} color="#fff" strokeWidth={3} />}
                 </span>
-                <span style={{ flex: 1, fontSize: 14, color: TEXT, fontWeight: 500 }}>{g.label}</span>
+                <span style={{ flex: 1, fontSize: 14, color: TXT, fontWeight: 500 }}>{g.label}</span>
                 <span
                   style={{
                     fontSize: 11,
                     color: g.done ? GREEN : MUTED,
                     fontWeight: 600,
-                    background: g.done ? '#E7F6EE' : '#F1ECE1',
+                    background: g.done ? (isDark ? '#0D2B1E' : '#E7F6EE') : DIAG_TRACK,
                     padding: '3px 8px',
                     borderRadius: 999,
                   }}
@@ -467,10 +480,10 @@ export default function Dashboard({
           <div style={{ ...card, borderRadius: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
               <Target size={15} color={GREEN} />
-              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Taxa de acerto</span>
+              <span style={{ fontSize: 10, color: MTXT, fontWeight: 600 }}>Taxa de acerto</span>
             </div>
             <div style={{ fontSize: 26, fontWeight: 800, color: GREEN }}>{Math.round(taxa)}%</div>
-            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>
+            <div style={{ fontSize: 10, color: MTXT, marginTop: 2 }}>
               <span style={{ color: GREEN, fontWeight: 600 }}>{totalCorrect}C</span>
               {' '}<span style={{ color: RED, fontWeight: 600 }}>{totalIncorrect}E</span>
               {' '}<span>de {totalAnswered}</span>
@@ -478,37 +491,37 @@ export default function Dashboard({
           </div>
 
           {/* Nota Líquida CEBRASPE */}
-          <div style={{ ...card, borderRadius: 14, border: `1px solid ${notaLiquida >= 0 ? '#BBF7D0' : '#FECACA'}` }}>
+          <div style={{ ...card, borderRadius: 14, border: `1px solid ${notaLiquida >= 0 ? (isDark ? '#1A4731' : '#BBF7D0') : (isDark ? '#4A1515' : '#FECACA')}` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
               <MinusCircle size={15} color={notaLiquida >= 0 ? GREEN : RED} />
-              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Nota Líquida</span>
+              <span style={{ fontSize: 10, color: MTXT, fontWeight: 600 }}>Nota Líquida</span>
             </div>
             <div style={{ fontSize: 26, fontWeight: 800, color: notaLiquida >= 0 ? GREEN : RED }}>
               {notaLiquida > 0 ? `+${notaLiquida}` : notaLiquida}
             </div>
-            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>acertos − erros (CEBRASPE)</div>
+            <div style={{ fontSize: 10, color: MTXT, marginTop: 2 }}>acertos − erros (CEBRASPE)</div>
           </div>
 
           {/* Total de questões */}
           <div style={{ ...card, borderRadius: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
               <Target size={15} color={BLUE} />
-              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Total de questões</span>
+              <span style={{ fontSize: 10, color: MTXT, fontWeight: 600 }}>Total de questões</span>
             </div>
             <div style={{ fontSize: 26, fontWeight: 800, color: BLUE }}>{totalAnswered}</div>
-            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>respondidas no total</div>
+            <div style={{ fontSize: 10, color: MTXT, marginTop: 2 }}>respondidas no total</div>
           </div>
 
           {/* Horas estudadas hoje */}
           <div style={{ ...card, borderRadius: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
               <Zap size={15} color={ORANGE} />
-              <span style={{ fontSize: 10, color: MUTED, fontWeight: 600 }}>Foco hoje</span>
+              <span style={{ fontSize: 10, color: MTXT, fontWeight: 600 }}>Foco hoje</span>
             </div>
             <div style={{ fontSize: 26, fontWeight: 800, color: minutosHoje > 0 ? ORANGE : MUTED }}>
               {horasHoje > 0 ? `${horasHoje}h` : ''}{minsResto > 0 ? `${minsResto}m` : minutosHoje === 0 ? '—' : ''}
             </div>
-            <div style={{ fontSize: 10, color: MUTED, marginTop: 2 }}>
+            <div style={{ fontSize: 10, color: MTXT, marginTop: 2 }}>
               {streak > 0 ? `${streak} dias seguidos` : 'inicie uma sessão'}
             </div>
           </div>
@@ -527,7 +540,7 @@ export default function Dashboard({
                 animation: 'pulse 1.5s infinite',
               }}
             />
-            <span style={{ fontSize: 11, color: MUTED, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <span style={{ fontSize: 11, color: MTXT, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               Diagnósticos estratégicos ativos
             </span>
           </div>
@@ -537,13 +550,13 @@ export default function Dashboard({
               return (
                 <div key={d.name}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                    <span style={{ fontSize: 13, fontWeight: 600, color: TEXT }}>{d.name}</span>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: TXT }}>{d.name}</span>
                     <span style={{ fontSize: 12, color, fontWeight: 700 }}>{Math.round(d.rate)}%</span>
                   </div>
-                  <div style={{ height: 6, background: '#F1ECE1', borderRadius: 999, overflow: 'hidden' }}>
+                  <div style={{ height: 6, background: DIAG_TRACK, borderRadius: 999, overflow: 'hidden' }}>
                     <div style={{ height: '100%', width: `${Math.max(d.rate, 2)}%`, background: color }} />
                   </div>
-                  <div style={{ fontSize: 11, color: MUTED, marginTop: 3 }}>{diagStatus(d.rate)}</div>
+                  <div style={{ fontSize: 11, color: MTXT, marginTop: 3 }}>{diagStatus(d.rate)}</div>
                 </div>
               );
             })}
@@ -590,7 +603,7 @@ export default function Dashboard({
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <CalendarDays size={16} color={BLUE} />
-                  <span style={{ fontSize: 11, color: MUTED, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                  <span style={{ fontSize: 11, color: MTXT, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                     Distribuição da semana
                   </span>
                 </div>
@@ -617,7 +630,7 @@ export default function Dashboard({
               </div>
 
               {!hasAny ? (
-                <div style={{ textAlign: 'center', padding: '24px 8px', color: MUTED, fontSize: 13 }}>
+                <div style={{ textAlign: 'center', padding: '24px 8px', color: MTXT, fontSize: 13 }}>
                   Cronograma ainda não gerado. Gere para visualizar a semana detalhada.
                 </div>
               ) : (
@@ -625,7 +638,7 @@ export default function Dashboard({
                   {/* Legenda */}
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 12 }}>
                     {Object.keys(actLabel).map((k) => (
-                      <div key={k} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 10, color: MUTED, fontWeight: 600 }}>
+                      <div key={k} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 10, color: MTXT, fontWeight: 600 }}>
                         <span style={{ width: 8, height: 8, borderRadius: 2, background: actColor[k] }} />
                         {actLabel[k]}
                       </div>
@@ -644,10 +657,10 @@ export default function Dashboard({
                         <div
                           key={d}
                           style={{
-                            border: isToday ? `2px solid ${BLUE}` : isTomorrow ? `1.5px dashed ${BLUE_BORDER}` : '1px solid #EFE8DA',
+                            border: isToday ? `2px solid ${BLUE}` : isTomorrow ? `1.5px dashed ${BLUE_BOR_D}` : `1px solid ${BORDER}`,
                             borderRadius: 10,
                             padding: 8,
-                            background: isToday ? BLUE_SOFT : '#fff',
+                            background: isToday ? BLUE_SOFT_D : SURFACE,
                             display: 'flex',
                             flexDirection: 'column',
                             gap: 6,
@@ -655,25 +668,25 @@ export default function Dashboard({
                           }}
                         >
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                            <span style={{ fontSize: 11, fontWeight: 800, color: isToday ? BLUE : TEXT, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                            <span style={{ fontSize: 11, fontWeight: 800, color: isToday ? BLUE : TXT, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                               {SHORT[i]}
                             </span>
                             {isToday && (
                               <span style={{ fontSize: 8, color: BLUE, fontWeight: 800, textTransform: 'uppercase' }}>Hoje</span>
                             )}
                             {isTomorrow && (
-                              <span style={{ fontSize: 8, color: MUTED, fontWeight: 700, textTransform: 'uppercase' }}>Amanhã</span>
+                              <span style={{ fontSize: 8, color: MTXT, fontWeight: 700, textTransform: 'uppercase' }}>Amanhã</span>
                             )}
                           </div>
 
                           {/* Barra de volume */}
-                          <div style={{ height: 3, background: '#E5EAF2', borderRadius: 999, overflow: 'hidden' }}>
+                          <div style={{ height: 3, background: TRACK, borderRadius: 999, overflow: 'hidden' }}>
                             <div style={{ height: '100%', width: `${heightPct}%`, background: isToday ? BLUE : BLUE_BORDER }} />
                           </div>
 
                           {/* Matérias do dia */}
                           {items.length === 0 ? (
-                            <div style={{ fontSize: 10, color: MUTED, textAlign: 'center', marginTop: 8, fontStyle: 'italic' }}>
+                            <div style={{ fontSize: 10, color: MTXT, textAlign: 'center', marginTop: 8, fontStyle: 'italic' }}>
                               Descanso
                             </div>
                           ) : (
@@ -682,7 +695,7 @@ export default function Dashboard({
                                 <div
                                   key={idx}
                                   style={{
-                                    background: '#FAF7F0',
+                                    background: ITEM_BG,
                                     borderLeft: `3px solid ${actColor[it.activityType] || BLUE}`,
                                     borderRadius: 4,
                                     padding: '4px 5px',
@@ -691,16 +704,16 @@ export default function Dashboard({
                                   }}
                                   title={`${it.name} — ${it.topic} (${it.duration}min)`}
                                 >
-                                  <div style={{ fontWeight: 700, color: TEXT, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                  <div style={{ fontWeight: 700, color: TXT, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                     {it.name}
                                   </div>
-                                  <div style={{ color: MUTED, display: 'flex', alignItems: 'center', gap: 3, marginTop: 1 }}>
+                                  <div style={{ color: MTXT, display: 'flex', alignItems: 'center', gap: 3, marginTop: 1 }}>
                                     <Clock size={8} /> {it.duration}min
                                   </div>
                                 </div>
                               ))}
                               {items.length > 4 && (
-                                <div style={{ fontSize: 9, color: MUTED, textAlign: 'center', fontWeight: 600 }}>
+                                <div style={{ fontSize: 9, color: MTXT, textAlign: 'center', fontWeight: 600 }}>
                                   +{items.length - 4} mais
                                 </div>
                               )}
@@ -709,7 +722,7 @@ export default function Dashboard({
 
                           {/* Total */}
                           {total > 0 && (
-                            <div style={{ fontSize: 10, color: isToday ? BLUE : MUTED, fontWeight: 700, textAlign: 'center', marginTop: 'auto', paddingTop: 4, borderTop: '1px dashed #EFE8DA' }}>
+                            <div style={{ fontSize: 10, color: isToday ? BLUE : MTXT, fontWeight: 700, textAlign: 'center', marginTop: 'auto', paddingTop: 4, borderTop: `1px dashed ${BORDER}` }}>
                               {(total / 60).toFixed(1)}h
                             </div>
                           )}
@@ -728,8 +741,8 @@ export default function Dashboard({
         {/* ATHENA */}
         <div
           style={{
-            background: BLUE_SOFT,
-            border: `1px solid ${BLUE_BORDER}`,
+            background: BLUE_SOFT_D,
+            border: `1px solid ${BLUE_BOR_D}`,
             borderRadius: 14,
             padding: 16,
             display: 'flex',
@@ -756,7 +769,7 @@ export default function Dashboard({
             <div style={{ fontSize: 10, color: BLUE, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
               Recomendação Athena IA
             </div>
-            <p style={{ fontSize: 13, color: TEXT, margin: '4px 0 0', lineHeight: 1.5 }}>{athenaText}</p>
+            <p style={{ fontSize: 13, color: TXT, margin: '4px 0 0', lineHeight: 1.5 }}>{athenaText}</p>
           </div>
         </div>
 
@@ -766,7 +779,7 @@ export default function Dashboard({
             <div style={{ display: 'flex', gap: 6, marginBottom: 6, flexWrap: 'wrap' }}>
               <span
                 style={{
-                  background: '#FDECEC',
+                  background: isDark ? '#2A1010' : '#FDECEC',
                   color: RED,
                   fontSize: 10,
                   fontWeight: 700,
@@ -778,7 +791,7 @@ export default function Dashboard({
               </span>
               <span
                 style={{
-                  background: '#FFF1D6',
+                  background: isDark ? '#2A1E0A' : '#FFF1D6',
                   color: ORANGE,
                   fontSize: 10,
                   fontWeight: 700,
@@ -789,8 +802,8 @@ export default function Dashboard({
                 5 resoluções críticas
               </span>
             </div>
-            <h3 style={{ fontSize: 15, fontWeight: 700, margin: '0 0 2px', color: TEXT }}>Radar do CONTRAN</h3>
-            <p style={{ fontSize: 12, color: MUTED, margin: 0 }}>
+            <h3 style={{ fontSize: 15, fontWeight: 700, margin: '0 0 2px', color: TXT }}>Radar do CONTRAN</h3>
+            <p style={{ fontSize: 12, color: MTXT, margin: 0 }}>
               Res. 432, 960 e 789 — mais cobradas pelo CEBRASPE
             </p>
           </div>
