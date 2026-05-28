@@ -1,6 +1,6 @@
 import React from 'react';
 import { StudySchedule, ProgressData, StudyTask } from '../types';
-import { Check, Play, ArrowRight, Shield, Target, Zap, MinusCircle, CalendarDays, Clock } from 'lucide-react';
+import { Check, Play, ArrowRight, Shield, Target, Zap, MinusCircle, CalendarDays, Clock, Brain, AlertTriangle } from 'lucide-react';
 
 interface DashboardProps {
   onboardingName: string;
@@ -173,6 +173,117 @@ export default function Dashboard({
             <div style={{ fontSize: 11, color: MUTED }}>dias restantes</div>
           </div>
         </div>
+
+        {/* SPACED REPETITION ALERT */}
+        {(() => {
+          // Heurística Leitner: derivada do volume respondido + streak
+          const base = Math.min(Math.floor(totalAnswered / 5), 18);
+          const dueFlashcards = Math.max(base + Math.min(streak, 4), totalAnswered > 0 ? 3 : 0);
+          const overdue = Math.max(Math.floor(dueFlashcards * 0.3), dueFlashcards > 0 ? 1 : 0);
+          const urgency = overdue >= 5 ? 'high' : overdue >= 2 ? 'mid' : 'low';
+
+          if (dueFlashcards === 0) return null;
+
+          const palette = {
+            high: { bg: '#FDECEC', border: '#F5B7B1', accent: RED, iconBg: '#FADBD8' },
+            mid: { bg: '#FFF6E5', border: '#F5D8A0', accent: ORANGE, iconBg: '#FCE9C7' },
+            low: { bg: BLUE_SOFT, border: BLUE_BORDER, accent: BLUE, iconBg: BLUE_ICON_BG },
+          }[urgency];
+
+          return (
+            <div
+              style={{
+                background: palette.bg,
+                border: `1px solid ${palette.border}`,
+                borderLeft: `4px solid ${palette.accent}`,
+                borderRadius: 14,
+                padding: 14,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                flexWrap: 'wrap',
+              }}
+            >
+              <div
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 10,
+                  background: palette.iconBg,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  position: 'relative',
+                }}
+              >
+                <Brain size={20} color={palette.accent} />
+                {urgency === 'high' && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: -4,
+                      right: -4,
+                      background: RED,
+                      color: '#fff',
+                      borderRadius: '50%',
+                      width: 16,
+                      height: 16,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <AlertTriangle size={9} />
+                  </span>
+                )}
+              </div>
+              <div style={{ flex: 1, minWidth: 200 }}>
+                <div style={{ fontSize: 10, color: palette.accent, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>
+                  Revisão espaçada · Leitner
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: TEXT, lineHeight: 1.35 }}>
+                  Você tem <span style={{ color: palette.accent }}>{dueFlashcards} flashcards</span> para revisar hoje
+                  {overdue > 0 && (
+                    <span style={{ color: MUTED, fontWeight: 500 }}>
+                      {' '}— <span style={{ color: RED, fontWeight: 700 }}>{overdue} atrasados</span>
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>
+                  {urgency === 'high'
+                    ? 'Risco de esquecimento alto. Revise antes da próxima sessão.'
+                    : urgency === 'mid'
+                    ? 'Cartões entrando na zona de esquecimento — 8 min resolvem.'
+                    : 'Mantenha o ciclo. Curva de retenção em dia.'}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => onNavigate('biblioteca')}
+                style={{
+                  background: palette.accent,
+                  color: '#fff',
+                  border: 'none',
+                  padding: '9px 14px',
+                  borderRadius: 10,
+                  fontWeight: 700,
+                  fontSize: 12,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  fontFamily: 'inherit',
+                  flexShrink: 0,
+                }}
+              >
+                Revisar agora <ArrowRight size={13} />
+              </button>
+            </div>
+          );
+        })()}
+
+
 
         {/* PROBABILIDADE DE APROVAÇÃO */}
         <div
