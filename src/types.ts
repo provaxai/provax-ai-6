@@ -97,6 +97,8 @@ export interface ProgressData {
   totalQuestionsAnswered: number;
   totalCorrect: number;
   totalIncorrect: number; // tracked separately to compute CEBRASPE liquid score
+  questoesHoje: number;   // reset diário
+  questoesHojeData: string; // YYYY-MM-DD — data do último reset
   syllabusCoverage: number; // %
   disciplinePerformance: {
     [discipline: string]: {

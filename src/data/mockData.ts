@@ -7,6 +7,8 @@ export const INITIAL_PROGRESS: ProgressData = {
   totalQuestionsAnswered: 134,
   totalCorrect: 86,
   totalIncorrect: 48,
+  questoesHoje: 0,
+  questoesHojeData: new Date().toISOString().split('T')[0],
   syllabusCoverage: 28.0,
   disciplinePerformance: {
     'Língua Portuguesa': { total: 30, correct: 21, efficiency: 70, status: 'safe' },
