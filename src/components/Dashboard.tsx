@@ -414,6 +414,181 @@ export default function Dashboard({
           </div>
         </div>
 
+        {/* WEEKLY DISTRIBUTION */}
+        {(() => {
+          const DAYS = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+          const SHORT = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+          const jsToIdx = [6, 0, 1, 2, 3, 4, 5]; // Dom=6, Seg=0...
+          const todayIdx = jsToIdx[new Date().getDay()];
+          const tomorrowIdx = (todayIdx + 1) % 7;
+
+          const weekly = schedule?.weekly || [];
+          const byDay: Record<string, { name: string; duration: number; activityType: string; topic: string }[]> = {};
+          DAYS.forEach((d) => (byDay[d] = []));
+          weekly.forEach((day) => {
+            const key = DAYS.find((d) => d.toLowerCase() === (day.dayOfWeek || '').toLowerCase());
+            if (key) byDay[key] = day.disciplines || [];
+          });
+
+          const totalsPerDay = DAYS.map((d) =>
+            byDay[d].reduce((acc, it) => acc + (it.duration || 0), 0)
+          );
+          const maxTotal = Math.max(...totalsPerDay, 1);
+          const hasAny = totalsPerDay.some((t) => t > 0);
+
+          const actColor: Record<string, string> = {
+            teoria: BLUE,
+            questões: '#7C3AED',
+            revisão: ORANGE,
+            simulado: RED,
+          };
+          const actLabel: Record<string, string> = {
+            teoria: 'Teoria',
+            questões: 'Questões',
+            revisão: 'Revisão',
+            simulado: 'Simulado',
+          };
+
+          return (
+            <div style={card}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <CalendarDays size={16} color={BLUE} />
+                  <span style={{ fontSize: 11, color: MUTED, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                    Distribuição da semana
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('cronograma')}
+                  style={{
+                    background: 'transparent',
+                    color: BLUE,
+                    border: `1px solid ${BLUE_BORDER}`,
+                    padding: '5px 10px',
+                    borderRadius: 8,
+                    fontWeight: 700,
+                    fontSize: 11,
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    fontFamily: 'inherit',
+                  }}
+                >
+                  Ver cronograma <ArrowRight size={12} />
+                </button>
+              </div>
+
+              {!hasAny ? (
+                <div style={{ textAlign: 'center', padding: '24px 8px', color: MUTED, fontSize: 13 }}>
+                  Cronograma ainda não gerado. Gere para visualizar a semana detalhada.
+                </div>
+              ) : (
+                <>
+                  {/* Legenda */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 12 }}>
+                    {Object.keys(actLabel).map((k) => (
+                      <div key={k} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 10, color: MUTED, fontWeight: 600 }}>
+                        <span style={{ width: 8, height: 8, borderRadius: 2, background: actColor[k] }} />
+                        {actLabel[k]}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Grid dos 7 dias */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8 }}>
+                    {DAYS.map((d, i) => {
+                      const items = byDay[d];
+                      const total = totalsPerDay[i];
+                      const isToday = i === todayIdx;
+                      const isTomorrow = i === tomorrowIdx;
+                      const heightPct = (total / maxTotal) * 100;
+                      return (
+                        <div
+                          key={d}
+                          style={{
+                            border: isToday ? `2px solid ${BLUE}` : isTomorrow ? `1.5px dashed ${BLUE_BORDER}` : '1px solid #EFE8DA',
+                            borderRadius: 10,
+                            padding: 8,
+                            background: isToday ? BLUE_SOFT : '#fff',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 6,
+                            minHeight: 160,
+                          }}
+                        >
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                            <span style={{ fontSize: 11, fontWeight: 800, color: isToday ? BLUE : TEXT, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                              {SHORT[i]}
+                            </span>
+                            {isToday && (
+                              <span style={{ fontSize: 8, color: BLUE, fontWeight: 800, textTransform: 'uppercase' }}>Hoje</span>
+                            )}
+                            {isTomorrow && (
+                              <span style={{ fontSize: 8, color: MUTED, fontWeight: 700, textTransform: 'uppercase' }}>Amanhã</span>
+                            )}
+                          </div>
+
+                          {/* Barra de volume */}
+                          <div style={{ height: 3, background: '#E5EAF2', borderRadius: 999, overflow: 'hidden' }}>
+                            <div style={{ height: '100%', width: `${heightPct}%`, background: isToday ? BLUE : BLUE_BORDER }} />
+                          </div>
+
+                          {/* Matérias do dia */}
+                          {items.length === 0 ? (
+                            <div style={{ fontSize: 10, color: MUTED, textAlign: 'center', marginTop: 8, fontStyle: 'italic' }}>
+                              Descanso
+                            </div>
+                          ) : (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flex: 1 }}>
+                              {items.slice(0, 4).map((it, idx) => (
+                                <div
+                                  key={idx}
+                                  style={{
+                                    background: '#FAF7F0',
+                                    borderLeft: `3px solid ${actColor[it.activityType] || BLUE}`,
+                                    borderRadius: 4,
+                                    padding: '4px 5px',
+                                    fontSize: 9.5,
+                                    lineHeight: 1.25,
+                                  }}
+                                  title={`${it.name} — ${it.topic} (${it.duration}min)`}
+                                >
+                                  <div style={{ fontWeight: 700, color: TEXT, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                    {it.name}
+                                  </div>
+                                  <div style={{ color: MUTED, display: 'flex', alignItems: 'center', gap: 3, marginTop: 1 }}>
+                                    <Clock size={8} /> {it.duration}min
+                                  </div>
+                                </div>
+                              ))}
+                              {items.length > 4 && (
+                                <div style={{ fontSize: 9, color: MUTED, textAlign: 'center', fontWeight: 600 }}>
+                                  +{items.length - 4} mais
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Total */}
+                          {total > 0 && (
+                            <div style={{ fontSize: 10, color: isToday ? BLUE : MUTED, fontWeight: 700, textAlign: 'center', marginTop: 'auto', paddingTop: 4, borderTop: '1px dashed #EFE8DA' }}>
+                              {(total / 60).toFixed(1)}h
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })()}
+
+
+
         {/* ATHENA */}
         <div
           style={{
