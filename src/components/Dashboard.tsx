@@ -1,6 +1,6 @@
 import React from 'react';
 import { StudySchedule, ProgressData, StudyTask } from '../types';
-import { Check, Play, ArrowRight, Shield, Target, Zap, MinusCircle, BookCheck } from 'lucide-react';
+import { Check, Play, ArrowRight, Shield, Target, Zap, MinusCircle, BookCheck, CalendarDays } from 'lucide-react';
 
 interface DashboardProps {
   onboardingName: string;
@@ -32,6 +32,7 @@ export default function Dashboard({
   onboardingName,
   testDate,
   progress,
+  schedule,
   onNavigate,
   onSelectTaskToTrain,
 }: DashboardProps) {
@@ -413,6 +414,106 @@ export default function Dashboard({
             </div>
           </div>
         </div>
+
+        {/* DISTRIBUIÇÃO DA SEMANA */}
+        {(() => {
+          const weekly = schedule?.weekly ?? [];
+          const dayLabels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+          const dayMap: Record<string, number> = {
+            Segunda: 0, 'Segunda-feira': 0,
+            Terça: 1, 'Terça-feira': 1, Terca: 1,
+            Quarta: 2, 'Quarta-feira': 2,
+            Quinta: 3, 'Quinta-feira': 3,
+            Sexta: 4, 'Sexta-feira': 4,
+            Sábado: 5, Sabado: 5,
+            Domingo: 6,
+          };
+          const byIndex: Array<{ label: string; total: number; disciplines: string[]; isToday: boolean }> = dayLabels.map((l) => ({
+            label: l, total: 0, disciplines: [], isToday: false,
+          }));
+          const todayIdx = (new Date().getDay() + 6) % 7; // 0=Mon
+          byIndex[todayIdx].isToday = true;
+          weekly.forEach((d) => {
+            const idx = dayMap[d.dayOfWeek] ?? -1;
+            if (idx < 0) return;
+            const total = d.disciplines.reduce((s, x) => s + (x.duration || 0), 0);
+            byIndex[idx].total = total;
+            byIndex[idx].disciplines = Array.from(new Set(d.disciplines.map((x) => x.name))).slice(0, 2);
+          });
+          const maxTotal = Math.max(60, ...byIndex.map((d) => d.total));
+          const hasData = byIndex.some((d) => d.total > 0);
+
+          return (
+            <div style={card}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, flexWrap: 'wrap', gap: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <CalendarDays size={16} color={BLUE} />
+                  <span style={{ fontSize: 13, fontWeight: 700, color: TEXT }}>Distribuição da semana</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('cronograma')}
+                  style={{
+                    background: 'transparent', border: 'none', color: BLUE, fontWeight: 700,
+                    fontSize: 12, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 4, fontFamily: 'inherit',
+                  }}
+                >
+                  Ver cronograma <ArrowRight size={12} />
+                </button>
+              </div>
+
+              {!hasData ? (
+                <div style={{ fontSize: 12, color: MUTED, padding: '8px 0' }}>
+                  Cronograma ainda não gerado. Abra o Cronograma para Athena montar sua semana.
+                </div>
+              ) : (
+                <>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 6, alignItems: 'end', height: 90 }}>
+                    {byIndex.map((d, i) => {
+                      const pct = d.total > 0 ? Math.max(8, (d.total / maxTotal) * 100) : 4;
+                      const barColor = d.isToday ? BLUE : d.total === 0 ? '#E5EAF2' : BLUE_BORDER;
+                      return (
+                        <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%' }}>
+                          <span style={{ fontSize: 9, color: MUTED, fontWeight: 600, marginBottom: 3 }}>
+                            {d.total > 0 ? `${Math.round(d.total / 60 * 10) / 10}h` : '–'}
+                          </span>
+                          <div
+                            title={d.disciplines.join(', ')}
+                            style={{
+                              width: '100%', height: `${pct}%`, background: barColor,
+                              borderRadius: 6, transition: 'all 0.3s',
+                            }}
+                          />
+                          <span style={{ fontSize: 10, color: d.isToday ? BLUE : MUTED, fontWeight: d.isToday ? 800 : 600, marginTop: 5 }}>
+                            {d.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid #F1ECE1' }}>
+                    {(() => {
+                      const next = byIndex[(todayIdx + 1) % 7];
+                      return (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 11, color: MUTED }}>
+                          <span>
+                            <span style={{ color: BLUE, fontWeight: 700 }}>Amanhã ({next.label}):</span>{' '}
+                            {next.disciplines.length > 0 ? next.disciplines.join(' · ') : 'Descanso'}
+                          </span>
+                          <span style={{ fontWeight: 700, color: TEXT }}>
+                            {next.total > 0 ? `${Math.round(next.total / 60 * 10) / 10}h` : '—'}
+                          </span>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })()}
+
+
 
         {/* DIAGNOSTICS */}
         <div style={card}>
