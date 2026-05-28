@@ -32,6 +32,7 @@ export default function Dashboard({
   onboardingName,
   testDate,
   progress,
+  schedule,
   onNavigate,
   onSelectTaskToTrain,
 }: DashboardProps) {
