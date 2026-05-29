@@ -27,5 +27,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: dist/server
-          command: deploy server.js --no-bundle --compatibility-date 2025-09-24 --compatibility-flags nodejs_compat
+          command: deploy dist/server/server.js --no-bundle --name tanstack-start-app --compatibility-date 2025-09-24 --compatibility-flags nodejs_compat
