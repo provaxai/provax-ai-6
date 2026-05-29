@@ -8,9 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v4
 
@@ -25,5 +22,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: List build output
+        run: ls dist/server/
+
       - name: Deploy to Cloudflare Workers
-        run: cd dist/server && npx wrangler@3 deploy index.js --name tanstack-start-app --compatibility-date 2025-09-24 --compatibility-flags nodejs_compat --assets ../client
+        working-directory: dist/server
+        run: npx wrangler@3 deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
