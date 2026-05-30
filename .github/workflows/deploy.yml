@@ -22,15 +22,13 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Diagnostico pos-build
-        run: |
-          echo "=== dist/server ===" && ls -la dist/server/
-          echo "=== wrangler-deploy.toml ===" && cat wrangler-deploy.toml
-          echo "=== wrangler version ===" && npx wrangler --version
+      - name: Verificar token Cloudflare
+        run: npx wrangler whoami
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --config wrangler-deploy.toml
+        run: npx wrangler deploy --config wrangler-deploy.toml
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
