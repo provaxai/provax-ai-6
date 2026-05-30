@@ -22,6 +22,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Diagnostico pos-build
+        run: |
+          echo "=== dist/server ===" && ls -la dist/server/
+          echo "=== wrangler-deploy.toml ===" && cat wrangler-deploy.toml
+          echo "=== wrangler version ===" && npx wrangler --version
+
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
