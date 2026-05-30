@@ -22,30 +22,9 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Prepare wrangler config for deploy
-        run: |
-          cat > wrangler.toml << 'EOF'
-          name = "tanstack-start-app"
-          main = "dist/server/server.js"
-          compatibility_date = "2025-09-24"
-          compatibility_flags = ["nodejs_compat"]
-          no_bundle = true
-
-          [assets]
-          directory = "dist/client"
-          EOF
-          sed -i 's/^          //' wrangler.toml
-
-      - name: Check secrets
-        run: |
-          if [ -z "$CF_TOKEN" ]; then echo "TOKEN VAZIO"; else echo "TOKEN OK (len=${#CF_TOKEN})"; fi
-          if [ -z "$CF_ACCOUNT" ]; then echo "ACCOUNT_ID VAZIO"; else echo "ACCOUNT_ID OK (len=${#CF_ACCOUNT})"; fi
-        env:
-          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --config dist/server/wrangler.json
