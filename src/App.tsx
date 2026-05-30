@@ -724,11 +724,12 @@ export default function App() {
         );
       case 'treinar':
         return (
-          <Treinar 
+          <Treinar
             selectedTaskToTrain={selectedTaskToTrain}
             onQuestionAnswered={handleQuestionAnswered}
             onFocusCycleCompleted={handleFocusCycleCompleted}
             defaultActiveTab="questoes"
+            theme={theme}
           />
         );
       case 'simulados':
@@ -793,11 +794,12 @@ export default function App() {
         );
       case 'contran':
         return (
-          <Treinar 
+          <Treinar
             selectedTaskToTrain={selectedTaskToTrain}
             onQuestionAnswered={handleQuestionAnswered}
             onFocusCycleCompleted={handleFocusCycleCompleted}
             defaultActiveTab="contran"
+            theme={theme}
           />
         );
       case 'admin':
