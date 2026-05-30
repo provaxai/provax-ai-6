@@ -176,6 +176,7 @@ export default function Dashboard({
   const ITEM_BG     = isDark ? '#1A2540' : '#FAF7F0';
   const BLUE_SOFT_D = isDark ? '#0D1F3C' : BLUE_SOFT;
   const BLUE_BOR_D  = isDark ? '#1F2D45' : BLUE_BORDER;
+  const BLUE_TEXT   = isDark ? '#93C5FD' : BLUE;
 
   const card: React.CSSProperties = {
     background: SURFACE,
@@ -196,7 +197,7 @@ export default function Dashboard({
               {getGreeting()} — Suíte de Planejamento Estratégico
             </div>
             <h1 style={{ fontSize: 24, fontWeight: 800, margin: '6px 0 4px', color: TXT, letterSpacing: '-0.01em' }}>
-              Foco na Meta, <span style={{ color: BLUE }}>{onboardingName || 'Recruta'}</span>
+              Foco na Meta, <span style={{ color: BLUE_TEXT }}>{onboardingName || 'Recruta'}</span>
             </h1>
             <p style={{ fontSize: 13, color: MTXT, margin: 0 }}>
               Athena compilou sua agenda de alto impacto para hoje.
@@ -216,7 +217,7 @@ export default function Dashboard({
         {/* MISSION */}
         <div style={card}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
-            <span style={{ background: BLUE_SOFT_D, color: BLUE, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', padding: '4px 10px', borderRadius: 999 }}>
+            <span style={{ background: BLUE_SOFT_D, color: BLUE_TEXT, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', padding: '4px 10px', borderRadius: 999 }}>
               ● Plano ativo de alto impacto
             </span>
           </div>
@@ -347,11 +348,11 @@ export default function Dashboard({
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
                 <div>
-                  <div style={{ fontSize: 10, color: approvalProb >= CUT_SCORE ? GREEN : BLUE, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>
+                  <div style={{ fontSize: 10, color: approvalProb >= CUT_SCORE ? GREEN : BLUE_TEXT, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>
                     Probabilidade de Aprovação PRF
                   </div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                    <span style={{ fontSize: 42, fontWeight: 900, color: approvalProb >= CUT_SCORE ? GREEN : BLUE, lineHeight: 1 }}>
+                    <span style={{ fontSize: 42, fontWeight: 900, color: approvalProb >= CUT_SCORE ? GREEN : BLUE_TEXT, lineHeight: 1 }}>
                       {approvalProb.toFixed(1)}%
                     </span>
                     <span style={{ fontSize: 12, color: MTXT }}>
@@ -436,10 +437,10 @@ export default function Dashboard({
           {/* Total de questões */}
           <div style={{ ...card, borderRadius: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-              <BarChart2 size={15} color={BLUE} />
+              <BarChart2 size={15} color={BLUE_TEXT} />
               <span style={{ fontSize: 10, color: MTXT, fontWeight: 600 }}>Total de questões</span>
             </div>
-            <div style={{ fontSize: 26, fontWeight: 800, color: BLUE }}>{totalAnswered}</div>
+            <div style={{ fontSize: 26, fontWeight: 800, color: BLUE_TEXT }}>{totalAnswered}</div>
             <div style={{ fontSize: 10, color: MTXT, marginTop: 2 }}>
               {totalAnswered < 100 ? `faltam ${100 - totalAnswered} p/ meta de 100` : 'meta de 100 atingida ✓'}
             </div>
@@ -463,7 +464,7 @@ export default function Dashboard({
         {/* DIAGNOSTICS */}
         <div style={card}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: BLUE, display: 'inline-block' }} />
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: BLUE_TEXT, display: 'inline-block' }} />
             <span style={{ fontSize: 11, color: MTXT, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               Diagnósticos estratégicos ativos
             </span>
@@ -514,7 +515,7 @@ export default function Dashboard({
             <div style={card}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <CalendarDays size={16} color={BLUE} />
+                  <CalendarDays size={16} color={BLUE_TEXT} />
                   <span style={{ fontSize: 11, color: MTXT, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                     Distribuição da semana
                   </span>
@@ -522,7 +523,7 @@ export default function Dashboard({
                 <button
                   type="button"
                   onClick={() => onNavigate('cronograma')}
-                  style={{ background: 'transparent', color: BLUE, border: `1px solid ${BLUE_BORDER}`, padding: '5px 10px', borderRadius: 8, fontWeight: 700, fontSize: 11, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 4, fontFamily: 'inherit' }}
+                  style={{ background: 'transparent', color: BLUE_TEXT, border: `1px solid ${BLUE_BOR_D}`, padding: '5px 10px', borderRadius: 8, fontWeight: 700, fontSize: 11, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 4, fontFamily: 'inherit' }}
                 >
                   Ver cronograma <ArrowRight size={12} />
                 </button>
@@ -531,7 +532,7 @@ export default function Dashboard({
               {!hasAny ? (
                 <div style={{ textAlign: 'center', padding: '24px 8px', color: MTXT, fontSize: 13 }}>
                   Cronograma ainda não gerado.{' '}
-                  <button type="button" onClick={() => onNavigate('cronograma')} style={{ color: BLUE, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700, fontSize: 13, fontFamily: 'inherit' }}>
+                  <button type="button" onClick={() => onNavigate('cronograma')} style={{ color: BLUE_TEXT, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700, fontSize: 13, fontFamily: 'inherit' }}>
                     Gerar agora →
                   </button>
                 </div>
@@ -557,13 +558,13 @@ export default function Dashboard({
                       return (
                         <div key={d} style={{ border: isToday ? `2px solid ${BLUE}` : isTomorrow ? `1.5px dashed ${BLUE_BOR_D}` : `1px solid ${BORDER}`, borderRadius: 10, padding: 8, background: isToday ? BLUE_SOFT_D : SURFACE, display: 'flex', flexDirection: 'column', gap: 6, minHeight: 160 }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                            <span style={{ fontSize: 11, fontWeight: 800, color: isToday ? BLUE : TXT, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{SHORT[i]}</span>
-                            {isToday && <span style={{ fontSize: 8, color: BLUE, fontWeight: 800, textTransform: 'uppercase' }}>Hoje</span>}
+                            <span style={{ fontSize: 11, fontWeight: 800, color: isToday ? BLUE_TEXT : TXT, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{SHORT[i]}</span>
+                            {isToday && <span style={{ fontSize: 8, color: BLUE_TEXT, fontWeight: 800, textTransform: 'uppercase' }}>Hoje</span>}
                             {isTomorrow && <span style={{ fontSize: 8, color: MTXT, fontWeight: 700, textTransform: 'uppercase' }}>Amanhã</span>}
                           </div>
 
                           <div style={{ height: 3, background: TRACK, borderRadius: 999, overflow: 'hidden' }}>
-                            <div style={{ height: '100%', width: `${heightPct}%`, background: isToday ? BLUE : BLUE_BORDER }} />
+                            <div style={{ height: '100%', width: `${heightPct}%`, background: isToday ? BLUE_TEXT : BLUE_BOR_D }} />
                           </div>
 
                           {items.length === 0 ? (
@@ -603,7 +604,7 @@ export default function Dashboard({
                           )}
 
                           {total > 0 && (
-                            <div style={{ fontSize: 10, color: isToday ? BLUE : MTXT, fontWeight: 700, textAlign: 'center', marginTop: 'auto', paddingTop: 4, borderTop: `1px dashed ${BORDER}` }}>
+                            <div style={{ fontSize: 10, color: isToday ? BLUE_TEXT : MTXT, fontWeight: 700, textAlign: 'center', marginTop: 'auto', paddingTop: 4, borderTop: `1px dashed ${BORDER}` }}>
                               {(total / 60).toFixed(1)}h
                             </div>
                           )}
@@ -619,11 +620,11 @@ export default function Dashboard({
 
         {/* ATHENA */}
         <div style={{ background: BLUE_SOFT_D, border: `1px solid ${BLUE_BOR_D}`, borderRadius: 14, padding: 16, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-          <div style={{ width: 36, height: 36, borderRadius: '50%', background: BLUE_ICON_BG, border: `1px solid ${BLUE_ICON_BORDER}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <Shield size={18} color={BLUE} />
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: isDark ? '#1A3060' : BLUE_ICON_BG, border: `1px solid ${isDark ? '#2D4F9A' : BLUE_ICON_BORDER}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Shield size={18} color={BLUE_TEXT} />
           </div>
           <div>
-            <div style={{ fontSize: 10, color: BLUE, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+            <div style={{ fontSize: 10, color: BLUE_TEXT, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
               Recomendação Athena IA
             </div>
             <p style={{ fontSize: 13, color: TXT, margin: '4px 0 0', lineHeight: 1.5 }}>{athenaText}</p>
